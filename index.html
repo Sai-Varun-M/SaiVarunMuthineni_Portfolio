@@ -44,21 +44,19 @@
     </style>
 </head>
 <body class="antialiased">
-    <!-- Three.js Canvas for background animation -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Header / Navigation -->
     <header class="fixed top-0 left-0 right-0 z-50">
         <nav class="max-w-4xl mx-auto px-6 py-4 flex justify-end items-center">
             <div class="space-x-8">
                 <a href="#top" class="text-slate-400 hover:text-white transition-colors">Home</a>
+                <a href="#experience" class="text-slate-400 hover:text-white transition-colors">Experience</a>
                 <a href="#projects" class="text-slate-400 hover:text-white transition-colors">Projects</a>
                 <a href="#skills" class="text-slate-400 hover:text-white transition-colors">Skills</a>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
     <div id="top" class="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
         <div class="max-w-4xl mx-auto text-center">
             <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">Sai Varun Muthineni</h1>
@@ -71,11 +69,51 @@
 
     <main class="relative z-10 px-6 sm:px-8 md:px-12 py-20 md:py-32 space-y-20 md:space-y-32">
         
-        <!-- Experience Section -->
         <section id="experience" class="content-section max-w-4xl mx-auto">
             <h2 class="text-3xl font-bold text-white mb-8">Experience</h2>
             <div class="space-y-8">
-                <!-- Experience 1: Freelance Video Editor -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-white">Teaching Assistant (Computer Network Security)</h3>
+                            <p class="text-slate-400">PES University</p>
+                        </div>
+                        <p class="text-slate-500 text-sm mt-2 sm:mt-0">Aug 2025 - Present</p>
+                    </div>
+                    <ul class="list-disc list-inside text-slate-300 space-y-2">
+                        <li>Conduct weekly lab sessions on network analysis using Wireshark and vulnerability scanning with Nmap.</li>
+                        <li>Assist students in understanding complex topics like SSL/TLS, firewalls, and cryptographic principles.</li>
+                        <li>Grade assignments and provide constructive feedback to a class of over 50 students.</li>
+                    </ul>
+                </div>
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-white">Teaching Assistant (Digital Forensics & Incident Response)</h3>
+                            <p class="text-slate-400">PES University</p>
+                        </div>
+                        <p class="text-slate-500 text-sm mt-2 sm:mt-0">Aug 2025 - Present</p>
+                    </div>
+                    <ul class="list-disc list-inside text-slate-300 space-y-2">
+                        <li>Guide students through evidence acquisition and analysis using tools like Autopsy and FTK Imager.</li>
+                        <li>Develop lab exercises focused on memory forensics, file system analysis, and log correlation.</li>
+                        <li>Support the lead instructor by preparing case studies on real-world incident response scenarios.</li>
+                    </ul>
+                </div>
+                 <div class="glass-card p-6 rounded-xl">
+                    <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-semibold text-white">Teaching Assistant (Python Programming)</h3>
+                            <p class="text-slate-400">PES University</p>
+                        </div>
+                        <p class="text-slate-500 text-sm mt-2 sm:mt-0">Aug 2025 - Present</p>
+                    </div>
+                    <ul class="list-disc list-inside text-slate-300 space-y-2">
+                        <li>Mentor students in foundational and advanced Python concepts, including data structures and algorithms.</li>
+                        <li>Review student code to enforce best practices for readability, efficiency, and maintainability.</li>
+                        <li>Lead debugging sessions to help students resolve logical errors and understand program execution flow.</li>
+                    </ul>
+                </div>
                 <div class="glass-card p-6 rounded-xl">
                     <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-4">
                         <div>
@@ -89,7 +127,6 @@
                         <li>Managed the end-to-end project life cycle for over 50 video projects, consistently meeting strict deadlines and ensuring client satisfaction through clear communication and iterative feedback cycles.</li>
                     </ul>
                 </div>
-                <!-- Experience 2: Corporate Relations Associate -->
                 <div class="glass-card p-6 rounded-xl">
                      <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-4">
                         <div>
@@ -107,36 +144,29 @@
             </div>
         </section>
 
-        <!-- Projects Section -->
         <section id="projects" class="content-section max-w-4xl mx-auto">
             <h2 class="text-3xl font-bold text-white mb-8">Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Project 1 -->
                 <div class="glass-card p-6 rounded-xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white">Multi-Client Quiz Game</h3>
                     <p class="mt-2 text-slate-400 flex-grow">Designed and implemented a secure client-server quiz system handling 10+ concurrent users. Incorporated SSL encryption and leaderboard tracking using Python socket programming.</p>
                 </div>
-                <!-- Project 2 -->
                 <div class="glass-card p-6 rounded-xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white">Dancing Lights</h3>
                     <p class="mt-2 text-slate-400 flex-grow">Programmed LED pattern sequences on an embedded microcontroller using interrupt-driven timing control and hardware-level I/O manipulation.</p>
                 </div>
-                <!-- Project 3 -->
                 <div class="glass-card p-6 rounded-xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white">Snake Game</h3>
                     <p class="mt-2 text-slate-400 flex-grow">Built a terminal-based snake game using dynamic memory management, arrays, and linked list operations for real-time user interaction.</p>
                 </div>
-                <!-- Project 4 -->
                 <div class="glass-card p-6 rounded-xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white">Mini E-Commerce App</h3>
                     <p class="mt-2 text-slate-400 flex-grow">Developed a console-based e-commerce simulation featuring shopping cart, order tracking, and basic authentication using Object-Oriented Programming.</p>
                 </div>
-                <!-- Project 5 -->
                 <div class="glass-card p-6 rounded-xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white">Pac-Man Clone</h3>
                     <p class="mt-2 text-slate-400 flex-grow">Created a 2D arcade-style game replicating Pac-Man mechanics including player controls, enemy AI, and score tracking using the Pygame library.</p>
                 </div>
-                <!-- Project 6 -->
                 <div class="glass-card p-6 rounded-xl flex flex-col">
                     <h3 class="text-xl font-semibold text-white">Exam Management System</h3>
                     <p class="mt-2 text-slate-400 flex-grow">Collaborated on a web-based portal for academic examination workflows including exam scheduling, student registration, and secure question management with SQL backend.</p>
@@ -144,7 +174,6 @@
             </div>
         </section>
 
-        <!-- Skills Section -->
         <section id="skills" class="content-section max-w-4xl mx-auto">
             <h2 class="text-3xl font-bold text-white mb-8">Skills</h2>
             <div class="glass-card p-8 rounded-xl">
@@ -170,7 +199,6 @@
 
     </main>
 
-    <!-- Footer Section -->
     <footer class="relative z-10 text-center py-12 px-6">
         <p class="text-slate-400 mb-6">Let's connect</p>
         <div class="flex justify-center items-center space-x-6">
