@@ -3,315 +3,439 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sai Varun Muthineni | Portfolio</title>
+    <title>Sai Varun Muthineni - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
-        html {
-            scroll-behavior: smooth;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0a0a0a;
-            color: #e2e8f0;
+            background-color: #000000;
+            color: #fafafa;
+            overflow-x: hidden;
         }
+        
         #bg-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -1;
+            z-index: 1;
         }
-        .content-section {
+
+        .scroll-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 5rem 1rem;
             opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition: opacity 0.8s ease-in-out;
         }
-        .content-section.visible {
+        
+        @media (min-width: 640px) {
+            .section {
+                padding: 5rem 2rem;
+            }
+        }
+
+
+        .section.visible {
             opacity: 1;
-            transform: translateY(0);
         }
+        
+        .section-content {
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            width: 100%;
+        }
+        
+        .huge-text {
+            font-size: clamp(2.5rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.05em;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 1);
+        }
+
+        .medium-text {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 600;
+            line-height: 1.2;
+            color: #cccccc;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+        }
+
         .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
         }
+
+        .skill-badge {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .skill-badge:hover {
+             background: rgba(56, 189, 248, 1);
+             color: #000;
+             transform: scale(1.1);
+        }
+
+        header {
+            z-index: 100 !important;
+        }
+
     </style>
 </head>
 <body class="antialiased">
     <canvas id="bg-canvas"></canvas>
 
-    <header class="fixed top-0 left-0 right-0 z-50">
-        <nav class="max-w-4xl mx-auto px-6 py-4 flex justify-end items-center">
-            <div class="space-x-8">
-                <a href="#top" class="text-slate-400 hover:text-white transition-colors">Home</a>
-                <a href="#experience" class="text-slate-400 hover:text-white transition-colors">Experience</a>
-                <a href="#projects" class="text-slate-400 hover:text-white transition-colors">Projects</a>
-                <a href="#skills" class="text-slate-400 hover:text-white transition-colors">Skills</a>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 p-4 md:p-6">
+        <nav class="container mx-auto flex justify-end items-center">
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 p-2 px-6 rounded-full bg-black/30 backdrop-blur-md border border-white/10">
+                <a href="#home" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Home</a>
+                <a href="#about" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">About</a>
+                <a href="#projects" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Projects</a>
+                <a href="#experience" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Experience</a>
+                <a href="#leadership" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Leadership</a>
+                <a href="#contact" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Contact</a>
+            </div>
+             <!-- Mobile Menu Button -->
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white p-2 rounded-md focus:outline-none">
+                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
             </div>
         </nav>
+         <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/80 backdrop-blur-md rounded-lg mt-4 border border-white/10">
+                <a href="#home" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#about" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#projects" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
+                <a href="#experience" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Experience</a>
+                <a href="#leadership" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Leadership</a>
+                <a href="#contact" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
     </header>
+    
+    <div class="scroll-container">
+        <!-- Hero Section -->
+        <section id="home" class="section h-screen justify-center items-center text-center">
+            <div class="section-content">
+                <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-slate-100 to-slate-400">
+                    Sai Varun Muthineni
+                </h1>
+                <p class="mt-4 text-base sm:text-lg md:text-2xl text-slate-300 max-w-3xl mx-auto">
+                   Computer Scientist. Cybersecurity Specialist. Innovator.
+                </p>
+            </div>
+        </section>
 
-    <div id="top" class="relative min-h-screen flex items-center justify-center p-4 overflow-hidden">
-        <div class="max-w-4xl mx-auto text-center">
-            <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white tracking-tight">Sai Varun Muthineni</h1>
-            <p class="mt-4 text-lg sm:text-xl md:text-2xl text-slate-400">Software Engineer</p>
-            <p class="mt-6 max-w-2xl mx-auto text-slate-300">
-                I am a Software Engineer with a Bachelor's degree in Computer Science from PES University at Bangalore.
-            </p>
-        </div>
+        <!-- Intro Text Section -->
+        <section id="intro-text" class="section h-[200vh] justify-start pt-48">
+             <div class="section-content sticky top-1/2 -translate-y-1/2">
+                <p class="medium-text">
+                    I build secure, efficient, and elegant software solutions, turning complex problems into intuitive user experiences.
+                </p>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section h-[250vh] justify-start pt-32">
+            <div class="section-content sticky top-1/2 -translate-y-1/2">
+                <h2 class="huge-text mb-8">About Me.</h2>
+                <div class="max-w-4xl mx-auto glass-card p-6 md:p-8">
+                    <p class="text-slate-200 text-base md:text-lg leading-relaxed">
+                        I am a results-driven Computer Science undergraduate from PES University with hands-on experience in software engineering, API development, and DevOps practices. With a strong focus on cybersecurity, I am proficient in vulnerability assessments and penetration testing. My goal is to apply my skills in secure development to create robust and impactful technology.
+                    </p>
+                </div>
+                <div class="mt-16">
+                     <h3 class="text-2xl md:text-3xl font-bold mb-8">Core Competencies</h3>
+                     <div class="flex flex-wrap justify-center gap-2 md:gap-4 max-w-4xl mx-auto">
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Python</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">C/C++</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">SQL</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Network Security</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Cryptography</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">System Hardening</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">SSL Packet Inspection</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Linux</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Git</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">TCP/IP</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Wireshark</span>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section h-[300vh] justify-start pt-32">
+            <div class="section-content sticky top-1/2 -translate-y-1/2">
+                <h2 class="huge-text mb-12">Projects.</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div class="glass-card p-6 text-left">
+                        <h3 class="text-xl font-bold mb-2 text-sky-400">Multi-Client Quiz Game</h3>
+                        <p class="text-slate-400 mb-4">Secure quiz system with SSL for 10+ concurrent users.</p>
+                        <a href="https://github.com/Sai-Varun-M/MultiServerQuizGameWithSSL" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                    </div>
+                    <div class="glass-card p-6 text-left">
+                        <h3 class="text-xl font-bold mb-2 text-sky-400">Snake Game</h3>
+                        <p class="text-slate-400 mb-4">Terminal-based snake game in C using dynamic memory.</p>
+                        <a href="https://github.com/Sai-Varun-M/SnakeGameUsingDataStructures" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                    </div>
+                    <div class="glass-card p-6 text-left">
+                        <h3 class="text-xl font-bold mb-2 text-sky-400">Pac-Man Clone</h3>
+                        <p class="text-slate-400 mb-4">Pygame Pac-Man clone with enemy AI and scoring.</p>
+                        <a href="https://github.com/Sai-Varun-M/Python-Pac-Man" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                    </div>
+                     <div class="glass-card p-6 text-left">
+                        <h3 class="text-xl font-bold mb-2 text-sky-400">Dancing Lights</h3>
+                        <p class="text-slate-400 mb-4">LED pattern sequences on an embedded microcontroller.</p>
+                         <a href="https://github.com/Sai-Varun-M/DancingLights" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                    </div>
+                    <div class="glass-card p-6 text-left">
+                        <h3 class="text-xl font-bold mb-2 text-sky-400">Mini E-Commerce App</h3>
+                        <p class="text-slate-400 mb-4">Console-based e-commerce app with cart and auth.</p>
+                         <a href="https://github.com/Sai-Varun-M/MiniE-commerce" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                    </div>
+                    <div class="glass-card p-6 text-left">
+                        <h3 class="text-xl font-bold mb-2 text-sky-400">Exam Management System</h3>
+                        <p class="text-slate-400 mb-4">Web portal for secure exam management workflows.</p>
+                         <a href="https://github.com/MohammedAdnan1193/ExamManagementSystem" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="section h-[250vh] justify-start pt-32">
+             <div class="section-content sticky top-1/2 -translate-y-1/2">
+                <h2 class="huge-text mb-12">Experience.</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="glass-card p-8 text-left md:col-span-2">
+                        <h3 class="text-2xl font-bold text-sky-400">Teaching Assistant</h3>
+                        <p class="text-slate-400 font-medium mb-2">PES University | Aug 2025 - Present</p>
+                        <ul class="list-disc list-inside text-slate-200 space-y-2">
+                            <li>Led labs in network security (Wireshark) & digital forensics (Autopsy).</li>
+                            <li>Mentored students in Python, data structures, and cybersecurity principles.</li>
+                            <li>Developed exercises on memory forensics and incident response.</li>
+                            <li>Graded assignments and led debugging sessions for 50+ students.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-8 text-left">
+                        <h3 class="text-2xl font-bold text-sky-400">Freelance Video Editor</h3>
+                        <p class="text-slate-400 font-medium mb-2">Fiverr | Jan 2024 - May 2025</p>
+                        <ul class="list-disc list-inside text-slate-200 space-y-2">
+                            <li>Managed end-to-end life cycle for 50+ video projects, ensuring client satisfaction and meeting deadlines.</li>
+                            <li>Translated creative visions into technical specifications and final products.</li>
+                        </ul>
+                    </div>
+                    <div class="glass-card p-8 text-left">
+                        <h3 class="text-2xl font-bold text-sky-400">Corporate Relations Associate</h3>
+                        <p class="text-slate-400 font-medium mb-2">AIESEC Bengaluru | Feb 2024 - May 2024</p>
+                        <ul class="list-disc list-inside text-slate-200 space-y-2">
+                            <li>Secured corporate partnerships by contacting 100+ leads via calls and emails.</li>
+                            <li>Negotiated sponsorship deals with CXOs, increasing revenue by 30%.</li>
+                            <li>Streamlined reporting using tools like Google Sheets and Slack.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leadership Section -->
+        <section id="leadership" class="section h-[200vh] justify-start pt-32">
+             <div class="section-content sticky top-1/2 -translate-y-1/2">
+                <h2 class="huge-text mb-12">Leadership.</h2>
+                <div class="max-w-3xl mx-auto">
+                    <div class="glass-card p-8 text-left">
+                        <h3 class="text-2xl font-bold text-sky-400">Campus Roles</h3>
+                        <ul class="list-disc list-inside text-slate-200 space-y-2">
+                            <li>Founder, Deputy Head - GronIT Club, PES University</li>
+                            <li>PR & Campaign Head - CSR Club</li>
+                            <li>Operations Team - Apple Developers' Group, Nexus Club</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section h-[200vh] justify-start pt-48">
+            <div class="section-content sticky top-1/2 -translate-y-1/2">
+                <h2 class="huge-text mb-4">Get In Touch.</h2>
+                <p class="medium-text mb-8">I'm currently seeking new opportunities.</p>
+                <a href="mailto:saivarun.m2661@gmail.com" class="inline-block bg-sky-500 text-white font-semibold px-10 py-4 rounded-lg hover:bg-sky-600 transition-all duration-300 transform hover:scale-105">
+                    Contact Me
+                </a>
+                <div class="flex justify-center space-x-6 mt-8">
+                    <a href="https://github.com/Sai-Varun-M" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/sai-varun-4a5983282/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
     </div>
-
-    <main class="relative z-10 px-6 sm:px-8 md:px-12 py-20 md:py-32 space-y-20 md:space-y-32">
-        
-        <section id="experience" class="content-section max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold text-white mb-8">Experience</h2>
-            <div class="space-y-8">
-                <div class="glass-card p-6 rounded-xl">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-white">Teaching Assistant (Computer Network Security)</h3>
-                            <p class="text-slate-400">PES University</p>
-                        </div>
-                        <p class="text-slate-500 text-sm mt-2 sm:mt-0">Aug 2025 - Present</p>
-                    </div>
-                    <ul class="list-disc list-inside text-slate-300 space-y-2">
-                        <li>Conduct weekly lab sessions on network analysis using Wireshark and vulnerability scanning with Nmap.</li>
-                        <li>Assist students in understanding complex topics like SSL/TLS, firewalls, and cryptographic principles.</li>
-                        <li>Grade assignments and provide constructive feedback to a class of over 50 students.</li>
-                    </ul>
-                </div>
-                <div class="glass-card p-6 rounded-xl">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-white">Teaching Assistant (Digital Forensics & Incident Response)</h3>
-                            <p class="text-slate-400">PES University</p>
-                        </div>
-                        <p class="text-slate-500 text-sm mt-2 sm:mt-0">Aug 2025 - Present</p>
-                    </div>
-                    <ul class="list-disc list-inside text-slate-300 space-y-2">
-                        <li>Guide students through evidence acquisition and analysis using tools like Autopsy and FTK Imager.</li>
-                        <li>Develop lab exercises focused on memory forensics, file system analysis, and log correlation.</li>
-                        <li>Support the lead instructor by preparing case studies on real-world incident response scenarios.</li>
-                    </ul>
-                </div>
-                 <div class="glass-card p-6 rounded-xl">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-white">Teaching Assistant (Python Programming)</h3>
-                            <p class="text-slate-400">PES University</p>
-                        </div>
-                        <p class="text-slate-500 text-sm mt-2 sm:mt-0">Aug 2025 - Present</p>
-                    </div>
-                    <ul class="list-disc list-inside text-slate-300 space-y-2">
-                        <li>Mentor students in foundational and advanced Python concepts, including data structures and algorithms.</li>
-                        <li>Review student code to enforce best practices for readability, efficiency, and maintainability.</li>
-                        <li>Lead debugging sessions to help students resolve logical errors and understand program execution flow.</li>
-                    </ul>
-                </div>
-                <div class="glass-card p-6 rounded-xl">
-                    <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-white">Freelance Video Editor</h3>
-                            <p class="text-slate-400">Fiverr</p>
-                        </div>
-                        <p class="text-slate-500 text-sm mt-2 sm:mt-0">Jan 2024 - May 2025</p>
-                    </div>
-                    <ul class="list-disc list-inside text-slate-300 space-y-2">
-                        <li>Collaborated directly with diverse clients to gather project requirements, translate creative visions into technical specifications, and deliver final products that aligned with their goals.</li>
-                        <li>Managed the end-to-end project life cycle for over 50 video projects, consistently meeting strict deadlines and ensuring client satisfaction through clear communication and iterative feedback cycles.</li>
-                    </ul>
-                </div>
-                <div class="glass-card p-6 rounded-xl">
-                     <div class="flex flex-col sm:flex-row justify-between sm:items-start mb-4">
-                        <div>
-                            <h3 class="text-xl font-semibold text-white">Corporate Relations Associate</h3>
-                            <p class="text-slate-400">AIESEC Bengaluru</p>
-                        </div>
-                        <p class="text-slate-500 text-sm mt-2 sm:mt-0">Feb 2024 - May 2024</p>
-                    </div>
-                    <ul class="list-disc list-inside text-slate-300 space-y-2">
-                        <li>Reached out to 100+ corporate leads via cold calls and email campaigns to secure partnerships.</li>
-                        <li>Negotiated sponsorship deals with CXOs and directors, increasing revenue by 30%.</li>
-                        <li>Streamlined reporting and feedback processes using collaborative tools like Google Sheets and Slack.</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <section id="projects" class="content-section max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold text-white mb-8">Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="glass-card p-6 rounded-xl flex flex-col">
-                    <h3 class="text-xl font-semibold text-white">Multi-Client Quiz Game</h3>
-                    <p class="mt-2 text-slate-400 flex-grow">Designed and implemented a secure client-server quiz system handling 10+ concurrent users. Incorporated SSL encryption and leaderboard tracking using Python socket programming.</p>
-                </div>
-                <div class="glass-card p-6 rounded-xl flex flex-col">
-                    <h3 class="text-xl font-semibold text-white">Dancing Lights</h3>
-                    <p class="mt-2 text-slate-400 flex-grow">Programmed LED pattern sequences on an embedded microcontroller using interrupt-driven timing control and hardware-level I/O manipulation.</p>
-                </div>
-                <div class="glass-card p-6 rounded-xl flex flex-col">
-                    <h3 class="text-xl font-semibold text-white">Snake Game</h3>
-                    <p class="mt-2 text-slate-400 flex-grow">Built a terminal-based snake game using dynamic memory management, arrays, and linked list operations for real-time user interaction.</p>
-                </div>
-                <div class="glass-card p-6 rounded-xl flex flex-col">
-                    <h3 class="text-xl font-semibold text-white">Mini E-Commerce App</h3>
-                    <p class="mt-2 text-slate-400 flex-grow">Developed a console-based e-commerce simulation featuring shopping cart, order tracking, and basic authentication using Object-Oriented Programming.</p>
-                </div>
-                <div class="glass-card p-6 rounded-xl flex flex-col">
-                    <h3 class="text-xl font-semibold text-white">Pac-Man Clone</h3>
-                    <p class="mt-2 text-slate-400 flex-grow">Created a 2D arcade-style game replicating Pac-Man mechanics including player controls, enemy AI, and score tracking using the Pygame library.</p>
-                </div>
-                <div class="glass-card p-6 rounded-xl flex flex-col">
-                    <h3 class="text-xl font-semibold text-white">Exam Management System</h3>
-                    <p class="mt-2 text-slate-400 flex-grow">Collaborated on a web-based portal for academic examination workflows including exam scheduling, student registration, and secure question management with SQL backend.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="content-section max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold text-white mb-8">Skills</h2>
-            <div class="glass-card p-8 rounded-xl">
-                <div class="flex flex-wrap gap-3 justify-center">
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">Python</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">C</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">C++</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">SQL</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">Network Security</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">Cryptography</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">System Hardening</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">SSL</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">Packet Inspection</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">Linux</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">Git</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">TCP/IP</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">Microcontrollers</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">Wireshark</span>
-                    <span class="bg-slate-700 text-slate-300 px-3 py-1 rounded-full text-sm">Pygame</span>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="relative z-10 text-center py-12 px-6">
-        <p class="text-slate-400 mb-6">Let's connect</p>
-        <div class="flex justify-center items-center space-x-6">
-            <a href="https://www.linkedin.com/in/sai-varun-4a5983282/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd"/></svg>
-            </a>
-            <a href="https://github.com/Sai-Varun-M" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.578.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"/></svg>
-            </a>
-            <a href="mailto:saivarun.m2661@gmail.com" class="text-slate-400 hover:text-white transition-colors">
-                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.003 5.884L10 11.882l7.997-5.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/><path d="M18 8.118l-8 6-8-6V16a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
-            </a>
-        </div>
-        <p class="mt-8 text-sm text-slate-600">&copy; 2024 Sai Varun Muthineni. All Rights Reserved.</p>
+    
+    <footer class="text-center p-4 text-slate-500 relative z-10">
+        <p>&copy; 2025 Sai Varun Muthineni. All Rights Reserved.</p>
     </footer>
 
     <script>
-        // --- Three.js Background Animation ---
-        let scene, camera, renderer, particles;
-        let mouseX = 0, mouseY = 0;
-        let windowHalfX = window.innerWidth / 2;
-        let windowHalfY = window.innerHeight / 2;
+        // --- 2D Canvas Matrix Rain Animation ---
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
 
-        function init() {
-            // Scene
-            scene = new THREE.Scene();
-
-            // Camera
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
-            camera.position.z = 1000;
-
-            // Particles
-            const particleCount = 5000;
-            const particlesGeometry = new THREE.BufferGeometry();
-            const posArray = new Float32Array(particleCount * 3);
-
-            for (let i = 0; i < particleCount * 3; i++) {
-                posArray[i] = (Math.random() - 0.5) * 2000;
-            }
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-            
-            const particleMaterial = new THREE.PointsMaterial({
-                size: 1.5,
-                color: 0x444444, // Particle color
-                transparent: true,
-                blending: THREE.AdditiveBlending
-            });
-
-            particles = new THREE.Points(particlesGeometry, particleMaterial);
-            scene.add(particles);
-
-            // Renderer
-            const canvas = document.querySelector('#bg-canvas');
-            renderer = new THREE.WebGLRenderer({
-                canvas: canvas,
-                alpha: true
-            });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // Animate particles
-            particles.rotation.x += 0.0001;
-            particles.rotation.y += 0.0002;
-
-            // Animate camera to follow mouse
-            camera.position.x += (mouseX - camera.position.x) * 0.01;
-            camera.position.y += (-mouseY - camera.position.y) * 0.01;
-            camera.lookAt(scene.position);
-
-            renderer.render(scene, camera);
-        }
-
-        function onWindowResize() {
-            windowHalfX = window.innerWidth / 2;
-            windowHalfY = window.innerHeight / 2;
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        }
-
-        function onDocumentMouseMove(event) {
-            mouseX = (event.clientX - windowHalfX) / 2;
-            mouseY = (event.clientY - windowHalfY) / 2;
-        }
+        let width, height, columns, drops, fontSize;
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const characters = katakana + latin + nums;
         
-        // --- Scroll Fade-in Animation for Sections ---
-        const sections = document.querySelectorAll('.content-section');
+        let activeColumns = 0;
+
+        function initializeMatrix() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            fontSize = 16;
+            columns = Math.floor(width / fontSize);
+            drops = [];
+            for (let i = 0; i < columns; i++) {
+                drops[i] = 1 + Math.random() * height;
+            }
+        }
+
+        function drawMatrix() {
+            // Fading effect
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+            
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < activeColumns; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                const x = i * fontSize;
+                const y = drops[i] * fontSize;
+
+                // Glowing lead character
+                ctx.fillStyle = '#fff';
+                ctx.fillText(text, x, y);
+
+                // Green trail
+                ctx.fillStyle = '#0F0';
+                ctx.fillText(text, x, y - fontSize); // Draw the green char right above the white one
+                
+                if (y > height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+
+        // --- Scroll-driven expansion ---
+        function updateAnimation() {
+            const scrollY = window.scrollY;
+            const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = Math.min(Math.max(scrollY / scrollableHeight, 0), 1);
+            
+            // Calculate how many columns should be active based on scroll
+            activeColumns = Math.floor(columns * (0.1 + scrollPercent * 0.9));
+        }
+
+        // --- Main animation loop ---
+        let lastTime = 0;
+        const fps = 24;
+        const nextFrame = 1000 / fps;
+        let timer = 0;
+
+        function animate(timeStamp) {
+            const deltaTime = timeStamp - lastTime;
+            lastTime = timeStamp;
+
+            if (timer > nextFrame) {
+                drawMatrix();
+                timer = 0;
+            } else {
+                timer += deltaTime;
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // Initialize and start
+        initializeMatrix();
+        updateAnimation();
+        animate(0);
+
+        // Event Listeners
+        window.addEventListener('resize', initializeMatrix);
+        window.addEventListener('scroll', updateAnimation);
+
+        // --- Smooth Scrolling & Mobile Nav ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                mobileMenu.classList.add('hidden'); // Close mobile menu on link click
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                     window.scrollTo({
+                        top: targetElement.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // --- Section Visibility on Scroll ---
+        const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
+                } else {
+                    entry.target.classList.remove('visible');
                 }
             });
-        }, {
-            threshold: 0.1
-        });
+        }, { threshold: 0.15 });
 
         sections.forEach(section => {
             observer.observe(section);
         });
 
-        // --- Event Listeners ---
-        window.addEventListener('resize', onWindowResize, false);
-        document.addEventListener('mousemove', onDocumentMouseMove, false);
-        
-        // --- Initialization ---
-        init();
-        animate();
     </script>
 </body>
 </html>
+
