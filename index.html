@@ -92,7 +92,14 @@
              color: #000;
              transform: scale(1.1);
         }
-
+        /* Hide scrollbar for horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
         header {
             z-index: 100 !important;
         }
@@ -226,41 +233,75 @@
         </section>
 
         <!-- Experience Section -->
-        <section id="experience" class="section h-[250vh] justify-start pt-32">
-             <div class="section-content sticky top-1/2 -translate-y-1/2">
-                <h2 class="huge-text mb-12">Experience.</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <div class="glass-card p-8 text-left md:col-span-2">
-                        <h3 class="text-2xl font-bold text-sky-400">Teaching Assistant</h3>
-                        <p class="text-slate-400 font-medium mb-2">PES University | Aug 2025 - Present</p>
+<section id="experience" class="section h-[200vh] justify-start pt-32">
+             <div class="section-content sticky top-1/2 -translate-y-1/2 w-full max-w-[100vw]">
+                
+                <div class="flex flex-col md:flex-row md:justify-between md:items-end mb-8 px-4 md:px-12 max-w-7xl mx-auto text-left md:text-left">
+                    <h2 class="huge-text mb-0">Experience.</h2>
+                    <button 
+                        onclick="const slider = document.getElementById('experience-slider'); slider.scrollTo({ left: slider.scrollWidth, behavior: 'smooth' });"
+                        class="flex items-center text-sky-400/80 animate-pulse hover:text-sky-300 hover:scale-105 transition-all duration-300 mt-4 md:mt-0 md:mb-4 cursor-pointer focus:outline-none"
+                        aria-label="Scroll to end of experiences"
+                    >
+                        <span class="text-sm font-semibold tracking-widest uppercase">Scroll to end</span>
+                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div id="experience-slider" class="flex overflow-x-auto gap-6 pb-8 px-4 md:px-12 snap-x snap-mandatory no-scrollbar max-w-7xl mx-auto">
+
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-sky-400">Quality Engineering Intern</h3>
+                            <p class="text-slate-300 font-medium mt-1">Deloitte | [Start Month] 2024 - Present</p>
+                        </div>
+                        <ul class="list-disc list-inside text-slate-200 space-y-2">
+                            <li>Designing and implementing automated test frameworks to ensure robust software delivery.</li>
+                            <li>Collaborating with development teams to identify vulnerabilities and optimize code quality.</li>
+                            <li>Performing rigorous API and UI testing, reducing production defects and accelerating deployment cycles.</li>
+                        </ul>
+                    </div>
+
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-sky-400">Teaching Assistant</h3>
+                            <p class="text-slate-300 font-medium mt-1">PES University | Aug 2023 - Present</p>
+                        </div>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
                             <li>Led labs in network security (Wireshark) & digital forensics (Autopsy).</li>
                             <li>Mentored students in Python, data structures, and cybersecurity principles.</li>
                             <li>Developed exercises on memory forensics and incident response.</li>
-                            <li>Graded assignments and led debugging sessions for 50+ students.</li>
                         </ul>
                     </div>
-                    <div class="glass-card p-8 text-left">
-                        <h3 class="text-2xl font-bold text-sky-400">Freelance Video Editor</h3>
-                        <p class="text-slate-400 font-medium mb-2">Fiverr | Jan 2024 - May 2025</p>
+
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-sky-400">Freelance Video Editor</h3>
+                            <p class="text-slate-300 font-medium mt-1">Fiverr | Jan 2024 - May 2025</p>
+                        </div>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
                             <li>Managed end-to-end life cycle for 50+ video projects, ensuring client satisfaction and meeting deadlines.</li>
                             <li>Translated creative visions into technical specifications and final products.</li>
                         </ul>
                     </div>
-                    <div class="glass-card p-8 text-left">
-                        <h3 class="text-2xl font-bold text-sky-400">Corporate Relations Associate</h3>
-                        <p class="text-slate-400 font-medium mb-2">AIESEC Bengaluru | Feb 2024 - May 2024</p>
+
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                        <div class="mb-4">
+                            <h3 class="text-2xl font-bold text-sky-400">Corporate Relations Associate</h3>
+                            <p class="text-slate-300 font-medium mt-1">AIESEC Bengaluru | Feb 2024 - May 2024</p>
+                        </div>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
                             <li>Secured corporate partnerships by contacting 100+ leads via calls and emails.</li>
                             <li>Negotiated sponsorship deals with CXOs, increasing revenue by 30%.</li>
                             <li>Streamlined reporting using tools like Google Sheets and Slack.</li>
                         </ul>
                     </div>
+
                 </div>
             </div>
         </section>
-
         <!-- Leadership Section -->
         <section id="leadership" class="section h-[200vh] justify-start pt-32">
              <div class="section-content sticky top-1/2 -translate-y-1/2">
