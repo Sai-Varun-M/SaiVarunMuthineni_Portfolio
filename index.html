@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,7 +15,7 @@
             color: #fafafa;
             overflow-x: hidden;
         }
-        
+
         #bg-canvas {
             position: fixed;
             top: 0;
@@ -38,7 +39,7 @@
             opacity: 0;
             transition: opacity 0.8s ease-in-out;
         }
-        
+
         @media (min-width: 640px) {
             .section {
                 padding: 5rem 2rem;
@@ -49,14 +50,14 @@
         .section.visible {
             opacity: 1;
         }
-        
+
         .section-content {
             max-width: 900px;
             text-align: center;
             position: relative;
             width: 100%;
         }
-        
+
         .huge-text {
             font-size: clamp(2.5rem, 10vw, 8rem);
             font-weight: 900;
@@ -87,25 +88,31 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
+
         .skill-badge:hover {
-             background: rgba(56, 189, 248, 1);
-             color: #000;
-             transform: scale(1.1);
+            background: rgba(56, 189, 248, 1);
+            color: #000;
+            transform: scale(1.1);
         }
+
         /* Hide scrollbar for horizontal scrolling */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
+
         .no-scrollbar {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
         }
+
         header {
             z-index: 100 !important;
         }
-
     </style>
 </head>
+
 <body class="antialiased">
     <canvas id="bg-canvas"></canvas>
 
@@ -113,54 +120,73 @@
     <header class="fixed top-0 left-0 right-0 z-50 p-4 md:p-6">
         <nav class="container mx-auto flex justify-end items-center">
             <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-8 p-2 px-6 rounded-full bg-black/30 backdrop-blur-md border border-white/10">
+            <div
+                class="hidden md:flex space-x-8 p-2 px-6 rounded-full bg-black/30 backdrop-blur-md border border-white/10">
                 <a href="#home" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Home</a>
-                <a href="#about" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">About</a>
-                <a href="#projects" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Projects</a>
-                <a href="#experience" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Experience</a>
-                <a href="#leadership" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Leadership</a>
-                <a href="#contact" class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Contact</a>
+                <a href="#about"
+                    class="nav-link text-slate-300 hover:text-white transition-colors duration-300">About</a>
+                <a href="#projects"
+                    class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Projects</a>
+                <a href="#experience"
+                    class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Experience</a>
+                <a href="#leadership"
+                    class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Leadership</a>
+                <a href="#contact"
+                    class="nav-link text-slate-300 hover:text-white transition-colors duration-300">Contact</a>
             </div>
-             <!-- Mobile Menu Button -->
+            <!-- Mobile Menu Button -->
             <div class="md:hidden">
                 <button id="mobile-menu-button" class="text-white p-2 rounded-md focus:outline-none">
-                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7" />
                     </svg>
                 </button>
             </div>
         </nav>
-         <!-- Mobile Menu -->
+        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/80 backdrop-blur-md rounded-lg mt-4 border border-white/10">
-                <a href="#home" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="#about" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
-                <a href="#projects" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
-                <a href="#experience" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Experience</a>
-                <a href="#leadership" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Leadership</a>
-                <a href="#contact" class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            <div
+                class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-black/80 backdrop-blur-md rounded-lg mt-4 border border-white/10">
+                <a href="#home"
+                    class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#about"
+                    class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#projects"
+                    class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
+                <a href="#experience"
+                    class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Experience</a>
+                <a href="#leadership"
+                    class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Leadership</a>
+                <a href="#contact"
+                    class="mobile-nav-link text-slate-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
             </div>
         </div>
     </header>
-    
-    <div class="scroll-container">
+
+    <div id="character-canvas-container" class="fixed top-0 right-0 w-full lg:w-[45%] h-full z-10 pointer-events-none">
+    </div>
+
+    <div class="scroll-container w-full lg:w-[55%] relative z-20">
         <!-- Hero Section -->
         <section id="home" class="section h-screen justify-center items-center text-center">
             <div class="section-content">
-                <h1 class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-slate-100 to-slate-400">
+                <h1
+                    class="text-4xl sm:text-5xl md:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-br from-slate-100 to-slate-400">
                     Sai Varun Muthineni
                 </h1>
                 <p class="mt-4 text-base sm:text-lg md:text-2xl text-slate-300 max-w-3xl mx-auto">
-                   Computer Scientist. Cybersecurity Specialist. Innovator.
+                    Computer Scientist. Cybersecurity Specialist. Innovator.
                 </p>
             </div>
         </section>
 
         <!-- Intro Text Section -->
         <section id="intro-text" class="section h-[200vh] justify-start pt-48">
-             <div class="section-content sticky top-1/2 -translate-y-1/2">
+            <div class="section-content sticky top-1/2 -translate-y-1/2">
                 <p class="medium-text">
-                    I build secure, efficient, and elegant software solutions, turning complex problems into intuitive user experiences.
+                    I build secure, efficient, and elegant software solutions, turning complex problems into intuitive
+                    user experiences.
                 </p>
             </div>
         </section>
@@ -171,24 +197,32 @@
                 <h2 class="huge-text mb-8">About Me.</h2>
                 <div class="max-w-4xl mx-auto glass-card p-6 md:p-8">
                     <p class="text-slate-200 text-base md:text-lg leading-relaxed">
-                        I am a results-driven Computer Science undergraduate from PES University with hands-on experience in software engineering, API development, and DevOps practices. With a strong focus on cybersecurity, I am proficient in vulnerability assessments and penetration testing. My goal is to apply my skills in secure development to create robust and impactful technology.
+                        I am a results-driven Computer Science undergraduate from PES University with hands-on
+                        experience in software engineering, API development, and DevOps practices. With a strong focus
+                        on cybersecurity, I am proficient in vulnerability assessments and penetration testing. My goal
+                        is to apply my skills in secure development to create robust and impactful technology.
                     </p>
                 </div>
                 <div class="mt-16">
-                     <h3 class="text-2xl md:text-3xl font-bold mb-8">Core Competencies</h3>
-                     <div class="flex flex-wrap justify-center gap-2 md:gap-4 max-w-4xl mx-auto">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-8">Core Competencies</h3>
+                    <div class="flex flex-wrap justify-center gap-2 md:gap-4 max-w-4xl mx-auto">
                         <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Python</span>
                         <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">C/C++</span>
                         <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">SQL</span>
-                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Network Security</span>
-                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Cryptography</span>
-                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">System Hardening</span>
-                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">SSL Packet Inspection</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Network
+                            Security</span>
+                        <span
+                            class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Cryptography</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">System
+                            Hardening</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">SSL Packet
+                            Inspection</span>
                         <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Linux</span>
                         <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Git</span>
                         <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">TCP/IP</span>
-                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Wireshark</span>
-                     </div>
+                        <span
+                            class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Wireshark</span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -201,70 +235,94 @@
                     <div class="glass-card p-6 text-left">
                         <h3 class="text-xl font-bold mb-2 text-sky-400">Multi-Client Quiz Game</h3>
                         <p class="text-slate-400 mb-4">Secure quiz system with SSL for 10+ concurrent users.</p>
-                        <a href="https://github.com/Sai-Varun-M/MultiServerQuizGameWithSSL" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                        <a href="https://github.com/Sai-Varun-M/MultiServerQuizGameWithSSL" target="_blank"
+                            rel="noopener noreferrer"
+                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            &rarr;</a>
                     </div>
                     <div class="glass-card p-6 text-left">
                         <h3 class="text-xl font-bold mb-2 text-sky-400">Snake Game</h3>
                         <p class="text-slate-400 mb-4">Terminal-based snake game in C using dynamic memory.</p>
-                        <a href="https://github.com/Sai-Varun-M/SnakeGameUsingDataStructures" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                        <a href="https://github.com/Sai-Varun-M/SnakeGameUsingDataStructures" target="_blank"
+                            rel="noopener noreferrer"
+                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            &rarr;</a>
                     </div>
                     <div class="glass-card p-6 text-left">
                         <h3 class="text-xl font-bold mb-2 text-sky-400">Pac-Man Clone</h3>
                         <p class="text-slate-400 mb-4">Pygame Pac-Man clone with enemy AI and scoring.</p>
-                        <a href="https://github.com/Sai-Varun-M/Python-Pac-Man" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                        <a href="https://github.com/Sai-Varun-M/Python-Pac-Man" target="_blank"
+                            rel="noopener noreferrer"
+                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            &rarr;</a>
                     </div>
-                     <div class="glass-card p-6 text-left">
+                    <div class="glass-card p-6 text-left">
                         <h3 class="text-xl font-bold mb-2 text-sky-400">Dancing Lights</h3>
                         <p class="text-slate-400 mb-4">LED pattern sequences on an embedded microcontroller.</p>
-                         <a href="https://github.com/Sai-Varun-M/DancingLights" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                        <a href="https://github.com/Sai-Varun-M/DancingLights" target="_blank" rel="noopener noreferrer"
+                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            &rarr;</a>
                     </div>
                     <div class="glass-card p-6 text-left">
                         <h3 class="text-xl font-bold mb-2 text-sky-400">Mini E-Commerce App</h3>
                         <p class="text-slate-400 mb-4">Console-based e-commerce app with cart and auth.</p>
-                         <a href="https://github.com/Sai-Varun-M/MiniE-commerce" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                        <a href="https://github.com/Sai-Varun-M/MiniE-commerce" target="_blank"
+                            rel="noopener noreferrer"
+                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            &rarr;</a>
                     </div>
                     <div class="glass-card p-6 text-left">
                         <h3 class="text-xl font-bold mb-2 text-sky-400">Exam Management System</h3>
                         <p class="text-slate-400 mb-4">Web portal for secure exam management workflows.</p>
-                         <a href="https://github.com/MohammedAdnan1193/ExamManagementSystem" target="_blank" rel="noopener noreferrer" class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub &rarr;</a>
+                        <a href="https://github.com/MohammedAdnan1193/ExamManagementSystem" target="_blank"
+                            rel="noopener noreferrer"
+                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            &rarr;</a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Experience Section -->
-<section id="experience" class="section h-[200vh] justify-start pt-32">
-             <div class="section-content sticky top-1/2 -translate-y-1/2 w-full max-w-[100vw]">
-                
-                <div class="flex flex-col md:flex-row md:justify-between md:items-end mb-8 px-4 md:px-12 max-w-7xl mx-auto text-left md:text-left">
+        <section id="experience" class="section h-[200vh] justify-start pt-32">
+            <div class="section-content sticky top-1/2 -translate-y-1/2 w-full max-w-[100vw]">
+
+                <div
+                    class="flex flex-col md:flex-row md:justify-between md:items-end mb-8 px-4 md:px-12 max-w-7xl mx-auto text-left md:text-left">
                     <h2 class="huge-text mb-0">Experience.</h2>
-                    <button 
-                        onclick="const slider = document.getElementById('experience-slider'); slider.scrollTo({ left: slider.scrollWidth, behavior: 'smooth' });"
+                    <button id="exp-scroll-btn"
                         class="flex items-center text-sky-400/80 animate-pulse hover:text-sky-300 hover:scale-105 transition-all duration-300 mt-4 md:mt-0 md:mb-4 cursor-pointer focus:outline-none"
-                        aria-label="Scroll to end of experiences"
-                    >
+                        aria-label="Toggle scroll experiences">
                         <span class="text-sm font-semibold tracking-widest uppercase">Scroll to end</span>
-                        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                        <svg class="w-5 h-5 ml-2 transition-transform duration-300" id="exp-scroll-icon" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 5l7 7-7 7M5 5l7 7-7 7" />
                         </svg>
                     </button>
                 </div>
-                
-                <div id="experience-slider" class="flex overflow-x-auto gap-6 pb-8 px-4 md:px-12 snap-x snap-mandatory no-scrollbar max-w-7xl mx-auto">
 
-                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                <div id="experience-slider"
+                    class="flex overflow-x-auto gap-6 pb-8 px-4 md:px-12 snap-x snap-mandatory no-scrollbar max-w-7xl mx-auto">
+
+                    <div
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-sky-400">Quality Engineering Intern</h3>
-                            <p class="text-slate-300 font-medium mt-1">Deloitte | [Start Month] 2024 - Present</p>
+                            <p class="text-slate-300 font-medium mt-1">Deloitte | Jan 2025 - Present</p>
                         </div>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
-                            <li>Designing and implementing automated test frameworks to ensure robust software delivery.</li>
-                            <li>Collaborating with development teams to identify vulnerabilities and optimize code quality.</li>
-                            <li>Performing rigorous API and UI testing, reducing production defects and accelerating deployment cycles.</li>
+                            <li>Designing and implementing automated test frameworks to ensure robust software delivery.
+                            </li>
+                            <li>Collaborating with development teams to identify vulnerabilities and optimize code
+                                quality.</li>
+                            <li>Performing rigorous API and UI testing, reducing production defects and accelerating
+                                deployment cycles.</li>
                         </ul>
                     </div>
 
-                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                    <div
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-sky-400">Teaching Assistant</h3>
                             <p class="text-slate-300 font-medium mt-1">PES University | Aug 2023 - Present</p>
@@ -276,18 +334,21 @@
                         </ul>
                     </div>
 
-                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                    <div
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-sky-400">Freelance Video Editor</h3>
                             <p class="text-slate-300 font-medium mt-1">Fiverr | Jan 2024 - May 2025</p>
                         </div>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
-                            <li>Managed end-to-end life cycle for 50+ video projects, ensuring client satisfaction and meeting deadlines.</li>
+                            <li>Managed end-to-end life cycle for 50+ video projects, ensuring client satisfaction and
+                                meeting deadlines.</li>
                             <li>Translated creative visions into technical specifications and final products.</li>
                         </ul>
                     </div>
 
-                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                    <div
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-sky-400">Corporate Relations Associate</h3>
                             <p class="text-slate-300 font-medium mt-1">AIESEC Bengaluru | Feb 2024 - May 2024</p>
@@ -304,7 +365,7 @@
         </section>
         <!-- Leadership Section -->
         <section id="leadership" class="section h-[200vh] justify-start pt-32">
-             <div class="section-content sticky top-1/2 -translate-y-1/2">
+            <div class="section-content sticky top-1/2 -translate-y-1/2">
                 <h2 class="huge-text mb-12">Leadership.</h2>
                 <div class="max-w-3xl mx-auto">
                     <div class="glass-card p-8 text-left">
@@ -324,25 +385,31 @@
             <div class="section-content sticky top-1/2 -translate-y-1/2">
                 <h2 class="huge-text mb-4">Get In Touch.</h2>
                 <p class="medium-text mb-8">I'm currently seeking new opportunities.</p>
-                <a href="mailto:saivarun.m2661@gmail.com" class="inline-block bg-sky-500 text-white font-semibold px-10 py-4 rounded-lg hover:bg-sky-600 transition-all duration-300 transform hover:scale-105">
+                <a href="mailto:saivarun.m2661@gmail.com"
+                    class="inline-block bg-sky-500 text-white font-semibold px-10 py-4 rounded-lg hover:bg-sky-600 transition-all duration-300 transform hover:scale-105">
                     Contact Me
                 </a>
                 <div class="flex justify-center space-x-6 mt-8">
-                    <a href="https://github.com/Sai-Varun-M" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
+                    <a href="https://github.com/Sai-Varun-M" target="_blank" rel="noopener noreferrer"
+                        class="text-slate-400 hover:text-white transition-colors">
                         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd" />
+                            <path fill-rule="evenodd"
+                                d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.492.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z"
+                                clip-rule="evenodd" />
                         </svg>
                     </a>
-                    <a href="https://www.linkedin.com/in/sai-varun-4a5983282/" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-white transition-colors">
+                    <a href="https://www.linkedin.com/in/sai-varun-4a5983282/" target="_blank" rel="noopener noreferrer"
+                        class="text-slate-400 hover:text-white transition-colors">
                         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+                            <path
+                                d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                         </svg>
                     </a>
                 </div>
             </div>
         </section>
     </div>
-    
+
     <footer class="text-center p-4 text-slate-500 relative z-10">
         <p>&copy; 2025 Sai Varun Muthineni. All Rights Reserved.</p>
     </footer>
@@ -357,7 +424,7 @@
         const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         const nums = '0123456789';
         const characters = katakana + latin + nums;
-        
+
         let activeColumns = 0;
 
         function initializeMatrix() {
@@ -375,9 +442,9 @@
             // Fading effect
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, width, height);
-            
+
             ctx.font = fontSize + 'px monospace';
-            
+
             for (let i = 0; i < activeColumns; i++) {
                 const text = characters.charAt(Math.floor(Math.random() * characters.length));
                 const x = i * fontSize;
@@ -390,11 +457,11 @@
                 // Green trail
                 ctx.fillStyle = '#0F0';
                 ctx.fillText(text, x, y - fontSize); // Draw the green char right above the white one
-                
+
                 if (y > height && Math.random() > 0.975) {
                     drops[i] = 0;
                 }
-                
+
                 drops[i]++;
             }
         }
@@ -404,7 +471,7 @@
             const scrollY = window.scrollY;
             const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
             const scrollPercent = Math.min(Math.max(scrollY / scrollableHeight, 0), 1);
-            
+
             // Calculate how many columns should be active based on scroll
             activeColumns = Math.floor(columns * (0.1 + scrollPercent * 0.9));
         }
@@ -440,7 +507,7 @@
         // --- Smooth Scrolling & Mobile Nav ---
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
-        
+
         mobileMenuButton.addEventListener('click', () => {
             mobileMenu.classList.toggle('hidden');
         });
@@ -452,14 +519,14 @@
                 const targetId = this.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                     window.scrollTo({
+                    window.scrollTo({
                         top: targetElement.offsetTop,
                         behavior: 'smooth'
                     });
                 }
             });
         });
-        
+
         // --- Section Visibility on Scroll ---
         const sections = document.querySelectorAll('.section');
         const observer = new IntersectionObserver((entries) => {
@@ -476,7 +543,68 @@
             observer.observe(section);
         });
 
-    </script>
-</body>
-</html>
+        // --- Experience Carousel Toggle ---
+        const expSlider = document.getElementById('experience-slider');
+        const expScrollBtn = document.getElementById('exp-scroll-btn');
+        if (expSlider && expScrollBtn) {
+            const expBtnText = expScrollBtn.querySelector('span');
+            const expBtnIcon = document.getElementById('exp-scroll-icon');
 
+            expScrollBtn.addEventListener('click', () => {
+                // Check if currently near the right end
+                const isAtEnd = expSlider.scrollLeft + expSlider.clientWidth >= expSlider.scrollWidth - 10;
+
+                if (isAtEnd) {
+                    // Scroll to start
+                    expSlider.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    // Scroll to end
+                    expSlider.scrollTo({ left: expSlider.scrollWidth, behavior: 'smooth' });
+                }
+            });
+
+            // Update button text and icon based on manual scrolling
+            expSlider.addEventListener('scroll', () => {
+                const isAtEnd = expSlider.scrollLeft + expSlider.clientWidth >= expSlider.scrollWidth - 10;
+                if (isAtEnd) {
+                    expBtnText.innerText = "Scroll to start";
+                    expBtnIcon.style.transform = "rotate(180deg)";
+                } else {
+                    expBtnText.innerText = "Scroll to end";
+                    expBtnIcon.style.transform = "rotate(0deg)";
+                }
+            });
+            // Allow vertical scroll wheel to scroll horizontally
+            expSlider.addEventListener('wheel', (evt) => {
+                // If scrolling up/down with wheel, translate it to left/right
+                if (evt.deltaY !== 0) {
+                    // Check if we are at the edges to allow normal vertical page scroll
+                    const isAtStart = expSlider.scrollLeft === 0;
+                    const isAtEnd = expSlider.scrollLeft + expSlider.clientWidth >= expSlider.scrollWidth - 1;
+
+                    // If moving right and not at end, OR moving left and not at start
+                    if ((evt.deltaY > 0 && !isAtEnd) || (evt.deltaY < 0 && !isAtStart)) {
+                        evt.preventDefault();
+                        expSlider.scrollLeft += evt.deltaY;
+                    }
+                }
+            }, { passive: false });
+        }
+
+    </script>
+
+    <!-- 3D Animation Scripts -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.168.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.168.0/examples/jsm/",
+                "gsap": "https://unpkg.com/gsap@3.12.5/index.js",
+                "gsap/ScrollTrigger": "https://unpkg.com/gsap@3.12.5/ScrollTrigger.js"
+            }
+        }
+    </script>
+    <script type="module" src="./assets/3d-animation.js"></script>
+</body>
+
+</html>
