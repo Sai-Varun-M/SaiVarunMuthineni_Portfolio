@@ -90,12 +90,26 @@
         }
 
         .skill-badge:hover {
-            background: rgba(56, 189, 248, 1);
+            background: rgba(34, 197, 94, 1);
+            /* green-500 */
             color: #000;
             transform: scale(1.1);
         }
 
-        /* Hide scrollbar for horizontal scrolling */
+        .force-hover {
+            display: inline-block;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), text-shadow 0.3s ease, color 0.3s ease;
+        }
+
+        .force-hover:hover {
+            transform: scale(1.1) translateY(-5px);
+            text-shadow: 0 15px 35px rgba(34, 197, 94, 0.6);
+            /* green-500 glow */
+            color: #22c55e;
+            /* green-500 text */
+        }
+
+        /* Hide typical scrollbar for horizontal scrolling and apply custom */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -105,6 +119,27 @@
             /* IE and Edge */
             scrollbar-width: none;
             /* Firefox */
+        }
+
+        /* Custom Scrollbar for Experience Section */
+        .custom-scrollbar::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(10, 10, 10, 0.75);
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(34, 197, 94, 0.5);
+            /* green-500 with transparency */
+            border-radius: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(34, 197, 94, 0.8);
+            /* green-500 solid */
         }
 
         header {
@@ -194,7 +229,7 @@
         <!-- About Section -->
         <section id="about" class="section h-[250vh] justify-start pt-32">
             <div class="section-content sticky top-1/2 -translate-y-1/2">
-                <h2 class="huge-text mb-8">About Me.</h2>
+                <h2 class="huge-text mb-8 force-hover cursor-pointer">About Me.</h2>
                 <div class="max-w-4xl mx-auto glass-card p-6 md:p-8">
                     <p class="text-slate-200 text-base md:text-lg leading-relaxed">
                         I am a results-driven Computer Science undergraduate from PES University with hands-on
@@ -230,53 +265,53 @@
         <!-- Projects Section -->
         <section id="projects" class="section h-[300vh] justify-start pt-32">
             <div class="section-content sticky top-1/2 -translate-y-1/2">
-                <h2 class="huge-text mb-12">Projects.</h2>
+                <h2 class="huge-text mb-12 force-hover cursor-pointer">Projects.</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <div class="glass-card p-6 text-left">
-                        <h3 class="text-xl font-bold mb-2 text-sky-400">Multi-Client Quiz Game</h3>
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Multi-Client Quiz Game</h3>
                         <p class="text-slate-400 mb-4">Secure quiz system with SSL for 10+ concurrent users.</p>
                         <a href="https://github.com/Sai-Varun-M/MultiServerQuizGameWithSSL" target="_blank"
                             rel="noopener noreferrer"
-                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
                     <div class="glass-card p-6 text-left">
-                        <h3 class="text-xl font-bold mb-2 text-sky-400">Snake Game</h3>
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Snake Game</h3>
                         <p class="text-slate-400 mb-4">Terminal-based snake game in C using dynamic memory.</p>
                         <a href="https://github.com/Sai-Varun-M/SnakeGameUsingDataStructures" target="_blank"
                             rel="noopener noreferrer"
-                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
                     <div class="glass-card p-6 text-left">
-                        <h3 class="text-xl font-bold mb-2 text-sky-400">Pac-Man Clone</h3>
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Pac-Man Clone</h3>
                         <p class="text-slate-400 mb-4">Pygame Pac-Man clone with enemy AI and scoring.</p>
                         <a href="https://github.com/Sai-Varun-M/Python-Pac-Man" target="_blank"
                             rel="noopener noreferrer"
-                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
                     <div class="glass-card p-6 text-left">
-                        <h3 class="text-xl font-bold mb-2 text-sky-400">Dancing Lights</h3>
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Dancing Lights</h3>
                         <p class="text-slate-400 mb-4">LED pattern sequences on an embedded microcontroller.</p>
                         <a href="https://github.com/Sai-Varun-M/DancingLights" target="_blank" rel="noopener noreferrer"
-                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
                     <div class="glass-card p-6 text-left">
-                        <h3 class="text-xl font-bold mb-2 text-sky-400">Mini E-Commerce App</h3>
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Mini E-Commerce App</h3>
                         <p class="text-slate-400 mb-4">Console-based e-commerce app with cart and auth.</p>
                         <a href="https://github.com/Sai-Varun-M/MiniE-commerce" target="_blank"
                             rel="noopener noreferrer"
-                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
                     <div class="glass-card p-6 text-left">
-                        <h3 class="text-xl font-bold mb-2 text-sky-400">Exam Management System</h3>
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Exam Management System</h3>
                         <p class="text-slate-400 mb-4">Web portal for secure exam management workflows.</p>
                         <a href="https://github.com/MohammedAdnan1193/ExamManagementSystem" target="_blank"
                             rel="noopener noreferrer"
-                            class="font-semibold text-sky-500 hover:text-sky-300 transition-colors">View on GitHub
+                            class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
                 </div>
@@ -289,9 +324,9 @@
 
                 <div
                     class="flex flex-col md:flex-row md:justify-between md:items-end mb-8 px-4 md:px-12 max-w-7xl mx-auto text-left md:text-left">
-                    <h2 class="huge-text mb-0">Experience.</h2>
+                    <h2 class="huge-text mb-0 force-hover cursor-pointer">Experience.</h2>
                     <button id="exp-scroll-btn"
-                        class="flex items-center text-sky-400/80 animate-pulse hover:text-sky-300 hover:scale-105 transition-all duration-300 mt-4 md:mt-0 md:mb-4 cursor-pointer focus:outline-none"
+                        class="flex items-center text-green-400/80 animate-pulse hover:text-green-300 hover:scale-105 transition-all duration-300 mt-4 md:mt-0 md:mb-4 cursor-pointer focus:outline-none"
                         aria-label="Toggle scroll experiences">
                         <span class="text-sm font-semibold tracking-widest uppercase">Scroll to end</span>
                         <svg class="w-5 h-5 ml-2 transition-transform duration-300" id="exp-scroll-icon" fill="none"
@@ -303,12 +338,12 @@
                 </div>
 
                 <div id="experience-slider"
-                    class="flex overflow-x-auto gap-6 pb-8 px-4 md:px-12 snap-x snap-mandatory no-scrollbar max-w-7xl mx-auto">
+                    class="flex overflow-x-auto gap-6 pb-8 px-4 md:px-12 snap-x snap-mandatory max-w-7xl mx-auto custom-scrollbar">
 
                     <div
-                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
-                            <h3 class="text-2xl font-bold text-sky-400">Quality Engineering Intern</h3>
+                            <h3 class="text-2xl font-bold text-green-400">Quality Engineering Intern</h3>
                             <p class="text-slate-300 font-medium mt-1">Deloitte | Jan 2025 - Present</p>
                         </div>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
@@ -322,9 +357,9 @@
                     </div>
 
                     <div
-                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
-                            <h3 class="text-2xl font-bold text-sky-400">Teaching Assistant</h3>
+                            <h3 class="text-2xl font-bold text-green-400">Teaching Assistant</h3>
                             <p class="text-slate-300 font-medium mt-1">PES University | Aug 2023 - Present</p>
                         </div>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
@@ -335,9 +370,9 @@
                     </div>
 
                     <div
-                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
-                            <h3 class="text-2xl font-bold text-sky-400">Freelance Video Editor</h3>
+                            <h3 class="text-2xl font-bold text-green-400">Freelance Video Editor</h3>
                             <p class="text-slate-300 font-medium mt-1">Fiverr | Jan 2024 - May 2025</p>
                         </div>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
@@ -348,9 +383,9 @@
                     </div>
 
                     <div
-                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-sky-500 hover:-translate-y-2 transition-transform duration-300">
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
-                            <h3 class="text-2xl font-bold text-sky-400">Corporate Relations Associate</h3>
+                            <h3 class="text-2xl font-bold text-green-400">Corporate Relations Associate</h3>
                             <p class="text-slate-300 font-medium mt-1">AIESEC Bengaluru | Feb 2024 - May 2024</p>
                         </div>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
@@ -366,10 +401,10 @@
         <!-- Leadership Section -->
         <section id="leadership" class="section h-[200vh] justify-start pt-32">
             <div class="section-content sticky top-1/2 -translate-y-1/2">
-                <h2 class="huge-text mb-12">Leadership.</h2>
+                <h2 class="huge-text mb-12 force-hover cursor-pointer">Leadership.</h2>
                 <div class="max-w-3xl mx-auto">
                     <div class="glass-card p-8 text-left">
-                        <h3 class="text-2xl font-bold text-sky-400">Campus Roles</h3>
+                        <h3 class="text-2xl font-bold text-green-400">Campus Roles</h3>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
                             <li>Founder, Deputy Head - GronIT Club, PES University</li>
                             <li>PR & Campaign Head - CSR Club</li>
@@ -383,10 +418,10 @@
         <!-- Contact Section -->
         <section id="contact" class="section h-[200vh] justify-start pt-48">
             <div class="section-content sticky top-1/2 -translate-y-1/2">
-                <h2 class="huge-text mb-4">Get In Touch.</h2>
+                <h2 class="huge-text mb-4 force-hover cursor-pointer">Get In Touch.</h2>
                 <p class="medium-text mb-8">I'm currently seeking new opportunities.</p>
                 <a href="mailto:saivarun.m2661@gmail.com"
-                    class="inline-block bg-sky-500 text-white font-semibold px-10 py-4 rounded-lg hover:bg-sky-600 transition-all duration-300 transform hover:scale-105">
+                    class="inline-block bg-green-500 text-white font-semibold px-10 py-4 rounded-lg hover:bg-green-600 transition-all duration-300 transform hover:scale-105">
                     Contact Me
                 </a>
                 <div class="flex justify-center space-x-6 mt-8">
@@ -576,13 +611,11 @@
             });
             // Allow vertical scroll wheel to scroll horizontally
             expSlider.addEventListener('wheel', (evt) => {
-                // If scrolling up/down with wheel, translate it to left/right
+                // ... (existing code for horizontal scroll)
                 if (evt.deltaY !== 0) {
-                    // Check if we are at the edges to allow normal vertical page scroll
                     const isAtStart = expSlider.scrollLeft === 0;
                     const isAtEnd = expSlider.scrollLeft + expSlider.clientWidth >= expSlider.scrollWidth - 1;
 
-                    // If moving right and not at end, OR moving left and not at start
                     if ((evt.deltaY > 0 && !isAtEnd) || (evt.deltaY < 0 && !isAtStart)) {
                         evt.preventDefault();
                         expSlider.scrollLeft += evt.deltaY;
@@ -590,6 +623,25 @@
                 }
             }, { passive: false });
         }
+
+        // --- Magnetic Force Hover Effect ---
+        const forceHoverElements = document.querySelectorAll('.force-hover');
+        forceHoverElements.forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const rect = el.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+
+                // Increase the force slightly
+                el.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px) scale(1.1)`;
+                el.style.textShadow = `${-x * 0.5}px ${-y * 0.5}px 25px rgba(56, 189, 248, 0.7)`;
+            });
+
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = `translate(0px, 0px) scale(1)`;
+                el.style.textShadow = `0 15px 35px rgba(56, 189, 248, 0)`;
+            });
+        });
 
     </script>
 
