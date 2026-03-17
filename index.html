@@ -5,9 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sai Varun Muthineni - Portfolio</title>
+
+    <!-- Preload critical 3D assets so browser fetches them during HTML parsing -->
+    <link rel="preload" href="./assets/models/character.enc" as="fetch" crossorigin>
+    <link rel="preload" href="./assets/models/char_enviorment.hdr" as="fetch" crossorigin>
+    <link rel="preload" href="./assets/draco/draco_decoder.wasm" as="fetch" crossorigin>
+
+    <!-- Preload Three.js core module -->
+    <link rel="modulepreload" href="https://unpkg.com/three@0.168.0/build/three.module.js">
+
+    <!-- Font: use <link> instead of @import to avoid render-blocking -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
         body {
             font-family: 'Inter', sans-serif;

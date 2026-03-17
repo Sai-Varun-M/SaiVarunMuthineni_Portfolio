@@ -22,6 +22,7 @@ const typingBoneNames = [
 ];
 const eyebrowBoneNames = ["eyebrow_L", "eyebrow_R"];
 
+// ── Encryption helpers ──
 async function generateAESKey(password) {
     const passwordBuffer = new TextEncoder().encode(password);
     const hashedPassword = await crypto.subtle.digest("SHA-256", passwordBuffer);
@@ -43,6 +44,22 @@ async function decryptFile(url, password) {
     return crypto.subtle.decrypt({ name: "AES-CBC", iv }, key, data);
 }
 
+// ── Promisified loaders ──
+function loadHDR(path, filename) {
+    return new Promise((resolve, reject) => {
+        new RGBELoader()
+            .setPath(path)
+            .load(filename, resolve, undefined, reject);
+    });
+}
+
+function loadGLTF(loader, url) {
+    return new Promise((resolve, reject) => {
+        loader.load(url, resolve, undefined, reject);
+    });
+}
+
+// ── Main init ──
 function init3D() {
     const container = document.getElementById('character-canvas-container');
     if (!container) return;
@@ -50,6 +67,7 @@ function init3D() {
     const width = container.clientWidth;
     const height = container.clientHeight;
     const aspect = width / height;
+    const isMobile = window.innerWidth <= 768 || window.devicePixelRatio > 2;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
@@ -57,7 +75,7 @@ function init3D() {
 
     const renderer = new THREE.WebGLRenderer({
         alpha: true,
-        antialias: true,
+        antialias: !isMobile, // Disable anti-aliasing on mobile for performance
         powerPreference: "high-performance",
         precision: "mediump"
     });
@@ -67,15 +85,19 @@ function init3D() {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = isMobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
+    // Start hidden — will fade in once model is ready
+    renderer.domElement.style.opacity = '0';
+
     // Lighting
-    const directionalLight = new THREE.DirectionalLight(0xc7a9ff, 0); // Intensity set to 0 initially for fade-in
-    directionalLight.position.set(-2, 5, 2); // Adjusted for better shadows
+    const directionalLight = new THREE.DirectionalLight(0xc7a9ff, 0);
+    directionalLight.position.set(-2, 5, 2);
     directionalLight.castShadow = true;
-    directionalLight.shadow.mapSize.width = 2048;
-    directionalLight.shadow.mapSize.height = 2048;
+    const shadowSize = isMobile ? 1024 : 2048;
+    directionalLight.shadow.mapSize.width = shadowSize;
+    directionalLight.shadow.mapSize.height = shadowSize;
     directionalLight.shadow.camera.near = 0.5;
     directionalLight.shadow.camera.far = 15;
     directionalLight.shadow.bias = -0.001;
@@ -85,154 +107,170 @@ function init3D() {
     pointLight.position.set(3, 12, 4);
     scene.add(pointLight);
 
-    new RGBELoader()
-        .setPath('./assets/models/')
-        .load('char_enviorment.hdr', function (texture) {
-            texture.mapping = THREE.EquirectangularReflectionMapping;
-            scene.environment = texture;
-            scene.environmentIntensity = 0;
-            scene.environmentRotation.set(5.76, 85.85, 1);
-        });
-
     let mixer, headBone, neckBone, spineBone, leftEye, rightEye, screenLight, loadedCharacter;
     let mouse = { x: 0, y: 0 }, targetRotation = { x: 0, y: 0 }, currentRotation = { x: 0, y: 0 };
     const clock = new THREE.Clock();
 
-    // Load Model
+    // ── IntersectionObserver: pause rendering when canvas is offscreen ──
+    let isCanvasVisible = true;
+    const canvasObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            isCanvasVisible = entry.isIntersecting;
+        });
+    }, { threshold: 0.01 });
+    canvasObserver.observe(container);
+
+    // Setup loaders
     const dracoLoader = new DRACOLoader();
     dracoLoader.setDecoderPath('./assets/draco/');
+    dracoLoader.preload(); // Pre-initialize the Draco WASM decoder
     const loader = new GLTFLoader();
     loader.setDRACOLoader(dracoLoader);
 
-    decryptFile('./assets/models/character.enc', 'Character3D#@').then((decryptedData) => {
+    // ── PARALLEL LOADING: HDR environment + encrypted model at the same time ──
+    Promise.all([
+        decryptFile('./assets/models/character.enc', 'Character3D#@'),
+        loadHDR('./assets/models/', 'char_enviorment.hdr')
+    ]).then(([decryptedData, hdrTexture]) => {
+        // Apply HDR environment immediately
+        hdrTexture.mapping = THREE.EquirectangularReflectionMapping;
+        scene.environment = hdrTexture;
+        scene.environmentIntensity = 0;
+        scene.environmentRotation.set(5.76, 85.85, 1);
+
+        // Load the decrypted GLTF model
         const blobUrl = URL.createObjectURL(new Blob([decryptedData]));
-        loader.load(blobUrl, (gltf) => {
-            loadedCharacter = gltf.scene;
-            scene.add(loadedCharacter);
+        return loadGLTF(loader, blobUrl);
+    }).then((gltf) => {
+        loadedCharacter = gltf.scene;
+        scene.add(loadedCharacter);
 
-            loadedCharacter.traverse((node) => {
-                if (node.isMesh) {
-                    node.castShadow = true;
-                    node.receiveShadow = true;
-                    // Fix: Optimize static calculations. This avoids recalculating the matrix every frame for bones that don't scale/move in the world
-                    node.matrixAutoUpdate = false;
-                    node.updateMatrix();
+        loadedCharacter.traverse((node) => {
+            if (node.isMesh) {
+                node.castShadow = true;
+                node.receiveShadow = true;
+                // NOTE: Do NOT set matrixAutoUpdate = false on animated meshes —
+                // the AnimationMixer needs to update their matrices every frame.
 
-                    if (node.material) {
-                        // Make materials look slightly less flat/plastic
-                        if (node.material.roughness !== undefined) {
-                            node.material.roughness = Math.max(0.2, node.material.roughness * 0.9);
-                        }
-
-                        // Premium Clothing Style
-                        const mName = node.material.name ? node.material.name.toLowerCase() : '';
-                        const nName = node.name ? node.name.toLowerCase() : '';
-
-                        // Top (Shirt/Jacket) - sleek dark color
-                        if (mName.includes('top') || mName.includes('shirt') || mName.includes('jacket') || nName.includes('top') || nName.includes('shirt')) {
-                            node.material.color.setHex(0x1e293b); // Slate 800
-                            node.material.roughness = 0.8;
-                        }
-
-                        // Bottom (Pants) - deep black/slate
-                        if (mName.includes('bottom') || mName.includes('pant') || nName.includes('bottom') || nName.includes('pant')) {
-                            node.material.color.setHex(0x0f172a); // Slate 900
-                            node.material.roughness = 0.9;
-                        }
-
-                        // Shoes - crisp white to pop against the dark theme
-                        if (mName.includes('shoe') || mName.includes('footwear') || nName.includes('shoe') || nName.includes('footwear')) {
-                            node.material.color.setHex(0xf8fafc); // Slate 50 (Off-white)
-                            node.material.roughness = 0.4;
-                            node.material.metalness = 0.1;
-                        }
-
-                        // Glasses - maybe make them cool
-                        if (mName.includes('glasses') || nName.includes('glasses')) {
-                            node.material.color.setHex(0x000000);
-                            node.material.metalness = 0.9;
-                            node.material.roughness = 0.1;
-                        }
+                if (node.material) {
+                    if (node.material.roughness !== undefined) {
+                        node.material.roughness = Math.max(0.2, node.material.roughness * 0.9);
                     }
+
+                    const mName = node.material.name ? node.material.name.toLowerCase() : '';
+                    const nName = node.name ? node.name.toLowerCase() : '';
+
+                    // Top (Shirt/Jacket)
+                    if (mName.includes('top') || mName.includes('shirt') || mName.includes('jacket') || nName.includes('top') || nName.includes('shirt')) {
+                        node.material.color.setHex(0x1e293b);
+                        node.material.roughness = 0.8;
+                    }
+
+                    // Bottom (Pants)
+                    if (mName.includes('bottom') || mName.includes('pant') || nName.includes('bottom') || nName.includes('pant')) {
+                        node.material.color.setHex(0x0f172a);
+                        node.material.roughness = 0.9;
+                    }
+
+                    // Shoes
+                    if (mName.includes('shoe') || mName.includes('footwear') || nName.includes('shoe') || nName.includes('footwear')) {
+                        node.material.color.setHex(0xf8fafc);
+                        node.material.roughness = 0.4;
+                        node.material.metalness = 0.1;
+                    }
+
+                    // Glasses
+                    if (mName.includes('glasses') || nName.includes('glasses')) {
+                        node.material.color.setHex(0x000000);
+                        node.material.metalness = 0.9;
+                        node.material.roughness = 0.1;
+                    }
+
+                    // Freeze material uniforms — no more changes needed after setup
+                    node.material.needsUpdate = false;
+                }
+            }
+        });
+
+        const footR = loadedCharacter.getObjectByName("footR");
+        const footL = loadedCharacter.getObjectByName("footL");
+        if (footR) footR.position.y = 3.36;
+        if (footL) footL.position.y = 3.36;
+
+        headBone = loadedCharacter.getObjectByName("spine006");
+        neckBone = loadedCharacter.getObjectByName("spine005");
+        spineBone = loadedCharacter.getObjectByName("spine004");
+        leftEye = loadedCharacter.getObjectByName("eyeL");
+        rightEye = loadedCharacter.getObjectByName("eyeR");
+
+        screenLight = loadedCharacter.getObjectByName("screenlight");
+
+        mixer = new THREE.AnimationMixer(loadedCharacter);
+
+        // Setup animations
+        const filterAnimationTracks = (clip, boneNames) => {
+            const filteredTracks = clip.tracks.filter((track) =>
+                boneNames.some((boneName) => track.name.includes(boneName))
+            );
+            return new THREE.AnimationClip(clip.name + "_filtered", clip.duration, filteredTracks);
+        };
+
+        if (gltf.animations.length > 0) {
+            const introClip = THREE.AnimationClip.findByName(gltf.animations, "introAnimation");
+            if (introClip) {
+                mixer.clipAction(introClip).setLoop(THREE.LoopOnce, 1).play();
+            }
+
+            ["key1", "key2", "key5", "key6"].forEach(name => {
+                const clip = THREE.AnimationClip.findByName(gltf.animations, name);
+                if (clip) {
+                    const action = mixer.clipAction(clip);
+                    action.play();
+                    action.timeScale = 1.8;
                 }
             });
 
-            const footR = loadedCharacter.getObjectByName("footR");
-            const footL = loadedCharacter.getObjectByName("footL");
-            if (footR) footR.position.y = 3.36;
-            if (footL) footL.position.y = 3.36;
-
-            headBone = loadedCharacter.getObjectByName("spine006");
-            neckBone = loadedCharacter.getObjectByName("spine005");
-            spineBone = loadedCharacter.getObjectByName("spine004");
-            leftEye = loadedCharacter.getObjectByName("eyeL");
-            rightEye = loadedCharacter.getObjectByName("eyeR");
-
-            screenLight = loadedCharacter.getObjectByName("screenlight");
-
-            mixer = new THREE.AnimationMixer(loadedCharacter);
-
-            // Setup animations
-            const filterAnimationTracks = (clip, boneNames) => {
-                const filteredTracks = clip.tracks.filter((track) =>
-                    boneNames.some((boneName) => track.name.includes(boneName))
-                );
-                return new THREE.AnimationClip(clip.name + "_filtered", clip.duration, filteredTracks);
-            };
-
-            if (gltf.animations.length > 0) {
-                const introClip = THREE.AnimationClip.findByName(gltf.animations, "introAnimation");
-                if (introClip) {
-                    mixer.clipAction(introClip).setLoop(THREE.LoopOnce, 1).play();
-                }
-
-                ["key1", "key2", "key5", "key6"].forEach(name => {
-                    const clip = THREE.AnimationClip.findByName(gltf.animations, name);
-                    if (clip) {
-                        const action = mixer.clipAction(clip);
-                        action.play();
-                        // INCREASED: Keyboard press animation playback speed
-                        action.timeScale = 1.8;
-                    }
-                });
-
-                const typingClip = THREE.AnimationClip.findByName(gltf.animations, "typing");
-                if (typingClip) {
-                    const typingAction = mixer.clipAction(filterAnimationTracks(typingClip, typingBoneNames));
-                    typingAction.play();
-                    // INCREASED: Hand typing animation playback speed
-                    typingAction.timeScale = 1.6;
-                }
-
-                // Smooth fade in of the whole scene to mask loading jitter
-                renderer.domElement.style.opacity = 0;
-                gsap.to(renderer.domElement, { opacity: 1, duration: 1.5, ease: "power2.inOut" });
-
-                setTimeout(() => {
-                    const blinkClip = THREE.AnimationClip.findByName(gltf.animations, "Blink");
-                    if (blinkClip) mixer.clipAction(blinkClip).play().fadeIn(0.5);
-
-                    gsap.to(scene, { environmentIntensity: 0.64, duration: 2, ease: "power2.inOut" });
-                    gsap.to(directionalLight, { intensity: 1.5, duration: 2, ease: "power2.inOut" });
-                }, 1500); // Reduced delay for faster lighting fade-in
+            const typingClip = THREE.AnimationClip.findByName(gltf.animations, "typing");
+            if (typingClip) {
+                const typingAction = mixer.clipAction(filterAnimationTracks(typingClip, typingBoneNames));
+                typingAction.play();
+                typingAction.timeScale = 1.6;
             }
 
-            setupScrollAnimations(loadedCharacter, camera, screenLight, directionalLight);
+            // Fast fade-in reveal — the model is ready!
+            gsap.to(renderer.domElement, { opacity: 1, duration: 0.8, ease: "power2.out" });
 
-        }, undefined, console.error);
-    });
+            // Reduced delay: blink + lighting fade-in after 500ms (was 1500ms)
+            setTimeout(() => {
+                const blinkClip = THREE.AnimationClip.findByName(gltf.animations, "Blink");
+                if (blinkClip) mixer.clipAction(blinkClip).play().fadeIn(0.5);
 
-    // Raycaster for head avoidance
+                gsap.to(scene, { environmentIntensity: 0.64, duration: 1.5, ease: "power2.inOut" });
+                gsap.to(directionalLight, { intensity: 1.5, duration: 1.5, ease: "power2.inOut" });
+            }, 500);
+        }
+
+        // Defer scroll animation setup to idle time so it doesn't block first paint
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => setupScrollAnimations(loadedCharacter, camera, screenLight, directionalLight));
+        } else {
+            setTimeout(() => setupScrollAnimations(loadedCharacter, camera, screenLight, directionalLight), 100);
+        }
+
+    }).catch(console.error);
+
+    // ── Raycaster for head avoidance (throttled) ──
     const raycaster = new THREE.Raycaster();
     const mouseVector = new THREE.Vector2();
+    let raycastFrame = 0;
+    let cachedHeadDistance = 999;
 
     window.addEventListener('mousemove', (e) => {
-        // Reduced max rotation bounds for natural tracking
         mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
-        mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
-        mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        mouseVector.x = mouse.x;
+        mouseVector.y = mouse.y;
     });
 
     window.addEventListener('resize', () => {
@@ -248,37 +286,39 @@ function init3D() {
 
     function animate() {
         requestAnimationFrame(animate);
+
+        // Skip rendering entirely when the canvas is offscreen
+        if (!isCanvasVisible) return;
+
         const delta = clock.getDelta();
         if (mixer) mixer.update(delta);
 
-        // Calculate Raycast to check if mouse is near head
-        raycaster.setFromCamera(mouseVector, camera);
-        let headDistance = 999;
+        // Throttle raycasting to every 3rd frame (~20 fps at 60fps)
+        raycastFrame++;
+        if (raycastFrame >= 3) {
+            raycastFrame = 0;
+            raycaster.setFromCamera(mouseVector, camera);
+            cachedHeadDistance = 999;
 
-        // Find distance to the specific character mesh
-        if (loadedCharacter) {
-            const intersects = raycaster.intersectObject(loadedCharacter, true);
-            if (intersects.length > 0) {
-                // Check if it's hitting the upper body/head region
-                const hitName = intersects[0].object.name.toLowerCase();
-                if (hitName.includes('head') || hitName.includes('face') || hitName.includes('hair') || hitName.includes('glasses') || hitName.includes('eye')) {
-                    headDistance = intersects[0].distance;
-                } else if (intersects[0].point.y > 10) { // Rough height check for head area
-                    headDistance = intersects[0].distance;
+            if (loadedCharacter) {
+                const intersects = raycaster.intersectObject(loadedCharacter, true);
+                if (intersects.length > 0) {
+                    const hitName = intersects[0].object.name.toLowerCase();
+                    if (hitName.includes('head') || hitName.includes('face') || hitName.includes('hair') || hitName.includes('glasses') || hitName.includes('eye')) {
+                        cachedHeadDistance = intersects[0].distance;
+                    } else if (intersects[0].point.y > 10) {
+                        cachedHeadDistance = intersects[0].distance;
+                    }
                 }
             }
         }
 
-        // Calculate avoidance force
+        // Calculate avoidance force using cached distance
         let targetAvoidanceX = 0;
         let targetAvoidanceY = 0;
 
-        // If mouse is very close to the character's screen space bounding/head (distance from camera to head is roughly 25-30)
-        if (headDistance < 35) {
-            // Apply exponential force based on proximity
-            const force = Math.max(0, (35 - headDistance) / 10);
-
-            // Push away from mouse
+        if (cachedHeadDistance < 35) {
+            const force = Math.max(0, (35 - cachedHeadDistance) / 10);
             targetAvoidanceX = -mouse.x * force * 1.5;
             targetAvoidanceY = -mouse.y * force * 1.5;
         }
@@ -292,22 +332,17 @@ function init3D() {
         avoidanceY = THREE.MathUtils.lerp(avoidanceY, targetAvoidanceY, 5.0 * delta);
 
         if (headBone && neckBone && spineBone) {
-            // Distribute the rotation across spine, neck, and head
-            // Head takes the most rotation + strong avoidance
             headBone.rotation.y = (-currentRotation.x * 0.4) + avoidanceX;
             headBone.rotation.x = (currentRotation.y * 0.4) + avoidanceY;
 
-            // Neck takes some + some avoidance
             neckBone.rotation.y = (-currentRotation.x * 0.2) + (avoidanceX * 0.5);
             neckBone.rotation.x = (currentRotation.y * 0.2) + (avoidanceY * 0.5);
 
-            // Spine takes a tiny bit
             spineBone.rotation.y = -currentRotation.x * 0.1;
             spineBone.rotation.x = currentRotation.y * 0.1;
         }
 
         if (leftEye && rightEye) {
-            // Eyes track slightly more intensely towards the cursor, but less when avoiding
             leftEye.rotation.y = (-currentRotation.x * 0.3) + (avoidanceX * 0.2);
             leftEye.rotation.x = (currentRotation.y * 0.3) + (avoidanceY * 0.2);
             rightEye.rotation.y = (-currentRotation.x * 0.3) + (avoidanceX * 0.2);
@@ -391,10 +426,8 @@ function setupScrollAnimations(character, camera, screenLight, light) {
         tl2
             .to(camera.position, { z: 65, y: 8.4, duration: 6, delay: 2, ease: "power3.inOut" }, 0)
             .to(character.rotation, { y: 0.92, x: 0.12, delay: 3, duration: 3 }, 0)
-            // Day to Night transition! Dim the global main light and environment down to near 0
-            // so the only thing lighting the scene is the monitor 
             .to(light, { intensity: 0.05, duration: 4, delay: 2, ease: "power2.inOut" }, 0)
-            .to(character.parent, { environmentIntensity: 0.05, duration: 4, delay: 2, ease: "power2.inOut" }, 0); // scene is character.parent
+            .to(character.parent, { environmentIntensity: 0.05, duration: 4, delay: 2, ease: "power2.inOut" }, 0);
 
         if (neckBone) tl2.to(neckBone.rotation, { x: 0.6, delay: 2, duration: 3 }, 0);
         if (monitor) tl2.to(monitor.material, { opacity: 1, duration: 0.8, delay: 3.2 }, 0);
