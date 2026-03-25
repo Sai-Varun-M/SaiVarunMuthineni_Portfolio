@@ -81,7 +81,7 @@ function init3D() {
     });
     renderer.setSize(width, height);
     // Limit pixel ratio to max 1.5 to save GPU overhead on high DPI screens
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.0 : 1.5));
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.2;
     renderer.shadowMap.enabled = true;
@@ -110,6 +110,9 @@ function init3D() {
     let mixer, headBone, neckBone, spineBone, leftEye, rightEye, screenLight, loadedCharacter;
     let mouse = { x: 0, y: 0 }, targetRotation = { x: 0, y: 0 }, currentRotation = { x: 0, y: 0 };
     const clock = new THREE.Clock();
+    let hoverTime = 0;
+    const characterGroup = new THREE.Group();
+    scene.add(characterGroup);
 
     // ── IntersectionObserver: pause rendering when canvas is offscreen ──
     let isCanvasVisible = true;
@@ -143,7 +146,7 @@ function init3D() {
         return loadGLTF(loader, blobUrl);
     }).then((gltf) => {
         loadedCharacter = gltf.scene;
-        scene.add(loadedCharacter);
+        characterGroup.add(loadedCharacter);
 
         loadedCharacter.traverse((node) => {
             if (node.isMesh) {
@@ -252,9 +255,9 @@ function init3D() {
 
         // Defer scroll animation setup to idle time so it doesn't block first paint
         if ('requestIdleCallback' in window) {
-            requestIdleCallback(() => setupScrollAnimations(loadedCharacter, camera, screenLight, directionalLight));
+            requestIdleCallback(() => setupScrollAnimations(loadedCharacter, camera, screenLight, directionalLight, scene));
         } else {
-            setTimeout(() => setupScrollAnimations(loadedCharacter, camera, screenLight, directionalLight), 100);
+            setTimeout(() => setupScrollAnimations(loadedCharacter, camera, screenLight, directionalLight, scene), 100);
         }
 
     }).catch(console.error);
@@ -331,6 +334,13 @@ function init3D() {
         avoidanceX = THREE.MathUtils.lerp(avoidanceX, targetAvoidanceX, 5.0 * delta);
         avoidanceY = THREE.MathUtils.lerp(avoidanceY, targetAvoidanceY, 5.0 * delta);
 
+        // Continuous floating / levitation (hover effect)
+        hoverTime += delta * 1.5;
+        characterGroup.position.y = Math.sin(hoverTime) * 0.2;
+        // Overall tilt based on mouse position
+        characterGroup.rotation.y = THREE.MathUtils.lerp(characterGroup.rotation.y, mouse.x * 0.05, 2.0 * delta);
+        characterGroup.rotation.x = THREE.MathUtils.lerp(characterGroup.rotation.x, -mouse.y * 0.05, 2.0 * delta);
+
         if (headBone && neckBone && spineBone) {
             headBone.rotation.y = (-currentRotation.x * 0.4) + avoidanceX;
             headBone.rotation.x = (currentRotation.y * 0.4) + avoidanceY;
@@ -360,7 +370,7 @@ function init3D() {
     animate();
 }
 
-function setupScrollAnimations(character, camera, screenLight, light) {
+function setupScrollAnimations(character, camera, screenLight, light, scene) {
     let intensity = 0;
     setInterval(() => { intensity = Math.random(); }, 200);
 
@@ -419,6 +429,24 @@ function setupScrollAnimations(character, camera, screenLight, light) {
             },
         });
 
+        const tl4 = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#experience",
+                start: "top center",
+                end: "bottom top",
+                scrub: true,
+            },
+        });
+
+        const tl5 = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#contact",
+                start: "top center",
+                end: "bottom bottom",
+                scrub: true,
+            },
+        });
+
         tl1
             .fromTo(character.rotation, { y: 0 }, { y: 0.7, duration: 1 }, 0)
             .to(camera.position, { z: 40 }, 0);
@@ -427,7 +455,7 @@ function setupScrollAnimations(character, camera, screenLight, light) {
             .to(camera.position, { z: 65, y: 8.4, duration: 6, delay: 2, ease: "power3.inOut" }, 0)
             .to(character.rotation, { y: 0.92, x: 0.12, delay: 3, duration: 3 }, 0)
             .to(light, { intensity: 0.05, duration: 4, delay: 2, ease: "power2.inOut" }, 0)
-            .to(character.parent, { environmentIntensity: 0.05, duration: 4, delay: 2, ease: "power2.inOut" }, 0);
+            .to(scene, { environmentIntensity: 0.05, duration: 4, delay: 2, ease: "power2.inOut" }, 0);
 
         if (neckBone) tl2.to(neckBone.rotation, { x: 0.6, delay: 2, duration: 3 }, 0);
         if (monitor) tl2.to(monitor.material, { opacity: 1, duration: 0.8, delay: 3.2 }, 0);
@@ -437,6 +465,16 @@ function setupScrollAnimations(character, camera, screenLight, light) {
         tl3
             .to(character.rotation, { x: -0.04, y: 0, duration: 2 }, 0)
             .to(camera.position, { z: 40, y: 13.1, duration: 4 }, 0);
+
+        tl4
+            .to(camera.position, { z: 42, x: -3, y: 12, duration: 2 }, 0)
+            .to(character.rotation, { y: -0.3, x: 0.05, duration: 2 }, 0);
+
+        tl5
+            .to(camera.position, { z: 35, x: 0, y: 14, duration: 2 }, 0)
+            .to(character.rotation, { y: 0, x: 0, duration: 2 }, 0)
+            .to(light, { intensity: 1.5, duration: 2 }, 0)
+            .to(scene, { environmentIntensity: 0.64, duration: 2 }, 0);
     }
 }
 

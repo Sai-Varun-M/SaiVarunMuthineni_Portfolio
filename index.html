@@ -6,22 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sai Varun Muthineni - Portfolio</title>
 
-    <!-- Preload critical 3D assets so browser fetches them during HTML parsing -->
-    <link rel="preload" href="./assets/models/character.enc" as="fetch" crossorigin>
-    <link rel="preload" href="./assets/models/char_enviorment.hdr" as="fetch" crossorigin>
-    <link rel="preload" href="./assets/draco/draco_decoder.wasm" as="fetch" crossorigin>
-
-    <!-- Preload Three.js core module -->
-    <link rel="modulepreload" href="https://unpkg.com/three@0.168.0/build/three.module.js">
+    <!-- Removed 3D preloads -->
 
     <!-- Font: use <link> instead of @import to avoid render-blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap">
 
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-
         body {
             font-family: 'Inter', sans-serif;
             background-color: #000000;
@@ -94,6 +88,10 @@
             border-radius: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
+        }
+
+        .glass-card p, .glass-card ul {
+            text-align: left;
         }
 
         .skill-badge {
@@ -212,10 +210,7 @@
         </div>
     </header>
 
-    <div id="character-canvas-container" class="fixed top-0 right-0 w-full lg:w-[45%] h-full z-10 pointer-events-none">
-    </div>
-
-    <div class="scroll-container w-full lg:w-[55%] relative z-20">
+    <div class="scroll-container w-full relative z-20 mx-auto">
         <!-- Hero Section -->
         <section id="home" class="section h-screen justify-center items-center text-center">
             <div class="section-content">
@@ -280,7 +275,7 @@
             <div class="section-content sticky top-1/2 -translate-y-1/2">
                 <h2 class="huge-text mb-12 force-hover cursor-pointer">Projects.</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="glass-card p-6 text-left">
+                    <div class="glass-card p-6 text-center">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Multi-Client Quiz Game</h3>
                         <p class="text-slate-400 mb-4">Secure quiz system with SSL for 10+ concurrent users.</p>
                         <a href="https://github.com/Sai-Varun-M/MultiServerQuizGameWithSSL" target="_blank"
@@ -288,7 +283,7 @@
                             class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
-                    <div class="glass-card p-6 text-left">
+                    <div class="glass-card p-6 text-center">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Snake Game</h3>
                         <p class="text-slate-400 mb-4">Terminal-based snake game in C using dynamic memory.</p>
                         <a href="https://github.com/Sai-Varun-M/SnakeGameUsingDataStructures" target="_blank"
@@ -296,7 +291,7 @@
                             class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
-                    <div class="glass-card p-6 text-left">
+                    <div class="glass-card p-6 text-center">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Pac-Man Clone</h3>
                         <p class="text-slate-400 mb-4">Pygame Pac-Man clone with enemy AI and scoring.</p>
                         <a href="https://github.com/Sai-Varun-M/Python-Pac-Man" target="_blank"
@@ -304,14 +299,14 @@
                             class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
-                    <div class="glass-card p-6 text-left">
+                    <div class="glass-card p-6 text-center">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Dancing Lights</h3>
                         <p class="text-slate-400 mb-4">LED pattern sequences on an embedded microcontroller.</p>
                         <a href="https://github.com/Sai-Varun-M/DancingLights" target="_blank" rel="noopener noreferrer"
                             class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
-                    <div class="glass-card p-6 text-left">
+                    <div class="glass-card p-6 text-center">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Mini E-Commerce App</h3>
                         <p class="text-slate-400 mb-4">Console-based e-commerce app with cart and auth.</p>
                         <a href="https://github.com/Sai-Varun-M/MiniE-commerce" target="_blank"
@@ -319,7 +314,7 @@
                             class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
-                    <div class="glass-card p-6 text-left">
+                    <div class="glass-card p-6 text-center">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Exam Management System</h3>
                         <p class="text-slate-400 mb-4">Web portal for secure exam management workflows.</p>
                         <a href="https://github.com/MohammedAdnan1193/ExamManagementSystem" target="_blank"
@@ -335,11 +330,10 @@
         <section id="experience" class="section h-[200vh] justify-start pt-32">
             <div class="section-content sticky top-1/2 -translate-y-1/2 w-full max-w-[100vw]">
 
-                <div
-                    class="flex flex-col md:flex-row md:justify-between md:items-end mb-8 px-4 md:px-12 max-w-7xl mx-auto text-left md:text-left">
+                <div class="flex flex-col items-center justify-center mb-8 px-4 md:px-12 max-w-7xl mx-auto text-center">
                     <h2 class="huge-text mb-0 force-hover cursor-pointer">Experience.</h2>
                     <button id="exp-scroll-btn"
-                        class="flex items-center text-green-400/80 animate-pulse hover:text-green-300 hover:scale-105 transition-all duration-300 mt-4 md:mt-0 md:mb-4 cursor-pointer focus:outline-none"
+                        class="flex items-center justify-center text-green-400/80 animate-pulse hover:text-green-300 hover:scale-105 transition-all duration-300 mt-6 cursor-pointer focus:outline-none"
                         aria-label="Toggle scroll experiences">
                         <span class="text-sm font-semibold tracking-widest uppercase">Scroll to end</span>
                         <svg class="w-5 h-5 ml-2 transition-transform duration-300" id="exp-scroll-icon" fill="none"
@@ -354,7 +348,7 @@
                     class="flex overflow-x-auto gap-6 pb-8 px-4 md:px-12 snap-x snap-mandatory max-w-7xl mx-auto custom-scrollbar">
 
                     <div
-                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-center border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-green-400">Quality Engineering Intern</h3>
                             <p class="text-slate-300 font-medium mt-1">Deloitte | Jan 2025 - Present</p>
@@ -370,7 +364,7 @@
                     </div>
 
                     <div
-                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-center border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-green-400">Teaching Assistant</h3>
                             <p class="text-slate-300 font-medium mt-1">PES University | Aug 2023 - Present</p>
@@ -383,7 +377,7 @@
                     </div>
 
                     <div
-                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-center border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-green-400">Freelance Video Editor</h3>
                             <p class="text-slate-300 font-medium mt-1">Fiverr | Jan 2024 - May 2025</p>
@@ -396,7 +390,7 @@
                     </div>
 
                     <div
-                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-left border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
+                        class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-8 text-center border-t-4 border-t-green-500 hover:-translate-y-2 transition-transform duration-300">
                         <div class="mb-4">
                             <h3 class="text-2xl font-bold text-green-400">Corporate Relations Associate</h3>
                             <p class="text-slate-300 font-medium mt-1">AIESEC Bengaluru | Feb 2024 - May 2024</p>
@@ -416,7 +410,7 @@
             <div class="section-content sticky top-1/2 -translate-y-1/2">
                 <h2 class="huge-text mb-12 force-hover cursor-pointer">Leadership.</h2>
                 <div class="max-w-3xl mx-auto">
-                    <div class="glass-card p-8 text-left">
+                    <div class="glass-card p-8 text-center">
                         <h3 class="text-2xl font-bold text-green-400">Campus Roles</h3>
                         <ul class="list-disc list-inside text-slate-200 space-y-2">
                             <li>Founder, Deputy Head - GronIT Club, PES University</li>
@@ -526,7 +520,7 @@
 
         // --- Main animation loop ---
         let lastTime = 0;
-        const fps = 24;
+        const fps = 15;
         const nextFrame = 1000 / fps;
         let timer = 0;
 
@@ -543,10 +537,12 @@
             requestAnimationFrame(animate);
         }
 
-        // Initialize and start
-        initializeMatrix();
-        updateAnimation();
-        animate(0);
+        // Delay Initialize and start to allow faster page load
+        window.addEventListener('load', () => {
+            initializeMatrix();
+            updateAnimation();
+            animate(0);
+        });
 
         // Event Listeners
         window.addEventListener('resize', initializeMatrix);
@@ -659,17 +655,7 @@
     </script>
 
     <!-- 3D Animation Scripts -->
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.168.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.168.0/examples/jsm/",
-                "gsap": "https://unpkg.com/gsap@3.12.5/index.js",
-                "gsap/ScrollTrigger": "https://unpkg.com/gsap@3.12.5/ScrollTrigger.js"
-            }
-        }
-    </script>
-    <script type="module" src="./assets/3d-animation.js"></script>
+    <!-- Scripts Removed -->
 </body>
 
 </html>
