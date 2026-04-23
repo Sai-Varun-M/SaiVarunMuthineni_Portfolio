@@ -65,8 +65,21 @@
             width: 100%;
         }
 
+        .section-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
         .huge-text {
-            font-size: clamp(2.5rem, 10vw, 8rem);
+            font-size: clamp(2.5rem, 6vw, 5rem);
             font-weight: 900;
             line-height: 1;
             letter-spacing: -0.05em;
@@ -82,12 +95,13 @@
         }
 
         .glass-card {
-            background: rgba(10, 10, 10, 0.75);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
         .glass-card p, .glass-card ul {
@@ -469,6 +483,7 @@
         const characters = katakana + latin + nums;
 
         let activeColumns = 0;
+        let columnIndices = [];
 
         function initializeMatrix() {
             width = canvas.width = window.innerWidth;
@@ -476,8 +491,15 @@
             fontSize = 16;
             columns = Math.floor(width / fontSize);
             drops = [];
+            columnIndices = [];
             for (let i = 0; i < columns; i++) {
                 drops[i] = 1 + Math.random() * height;
+                columnIndices.push(i);
+            }
+            // Shuffle column indices to randomly distribute the active columns across the screen
+            for (let i = columnIndices.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [columnIndices[i], columnIndices[j]] = [columnIndices[j], columnIndices[i]];
             }
         }
 
@@ -489,23 +511,33 @@
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < activeColumns; i++) {
+                const colIndex = columnIndices[i];
+                if (colIndex === undefined) continue;
+
                 const text = characters.charAt(Math.floor(Math.random() * characters.length));
-                const x = i * fontSize;
-                const y = drops[i] * fontSize;
+                const x = colIndex * fontSize;
+                const y = drops[colIndex] * fontSize;
 
                 // Glowing lead character
                 ctx.fillStyle = '#fff';
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = '#fff';
                 ctx.fillText(text, x, y);
 
                 // Green trail
-                ctx.fillStyle = '#0F0';
+                ctx.fillStyle = '#22c55e'; // cyber green
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#22c55e';
                 ctx.fillText(text, x, y - fontSize); // Draw the green char right above the white one
 
+                // Reset shadow to avoid affecting background fade
+                ctx.shadowBlur = 0;
+
                 if (y > height && Math.random() > 0.975) {
-                    drops[i] = 0;
+                    drops[colIndex] = 0;
                 }
 
-                drops[i]++;
+                drops[colIndex]++;
             }
         }
 
