@@ -7,6 +7,7 @@
 [![Live Site](https://img.shields.io/badge/🌐_Live_Site-Visit-22c55e?style=for-the-badge)](https://sai-varun-m.github.io/SaiVarunMuthineni_Portfolio/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/sai-varun-4a5983282/)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Sai-Varun-M)
+[![Email](https://img.shields.io/badge/Email-Contact-22c55e?style=for-the-badge&logo=gmail&logoColor=white)](mailto:saivarun.m2661@gmail.com)
 
 </div>
 
@@ -14,34 +15,66 @@
 
 ## ✨ Overview
 
-👋 Welcome! This is my personal portfolio — a little corner of the internet where I showcase my projects, skills, and the things I'm passionate about. Built with love, curiosity, and way too much coffee. ☕
+👋 Welcome! This is my personal portfolio — a sleek, scroll-driven single-page experience that showcases my projects, skills, experience, and leadership roles. Built with a focus on clean design and smooth interactivity.
 
-> **Featuring a fully interactive 3D character** that tracks your cursor, reacts to proximity, and transitions through cinematic scroll-based animations — all rendered in real-time with Three.js.
+> **Featuring a live Matrix Rain canvas animation** — a scroll-reactive background of Katakana, Latin, and numeric characters that expands as you explore the page.
 
 ---
 
 ## 🛠️ Built With
 
 | Layer | Technology |
-|-------|-----------|
+|-------|------------|
 | **Structure** | HTML5 · Semantic markup |
-| **Styling** | Tailwind CSS · Glassmorphism · Custom animations |
-| **3D Engine** | Three.js · GLTF/Draco models · RGBE HDR lighting |
-| **Animation** | GSAP · ScrollTrigger · CSS transitions |
-| **Effects** | Matrix rain canvas · Magnetic hover · Morph targets |
-| **Security** | AES-CBC encrypted 3D assets |
+| **Styling** | Tailwind CSS · Glassmorphism · Custom CSS animations |
+| **Background** | 2D Canvas API · Matrix Rain (Katakana + Latin + Nums) |
+| **Typography** | Google Fonts — Inter |
+| **Effects** | Magnetic hover · Section fade-in · Scroll-driven animation |
+| **Layout** | Responsive · CSS Flexbox & Grid |
 
 ---
 
 ## 🎯 Key Features
 
-- 🧑‍💻 **Interactive 3D Character** — Head, eyes, and body track your cursor in real-time
-- 🎬 **Cinematic Scroll Animations** — Camera angles shift as you navigate between sections
-- 🌙 **Day-to-Night Transition** — Scene lighting transforms as you scroll to the desk setup
-- 💡 **Dynamic Monitor Glow** — Flickering screen light with emissive bloom
-- 🟢 **Matrix Rain Background** — Scroll-reactive canvas animation
-- 📱 **Fully Responsive** — Optimized for desktop, tablet, and mobile
-- ⚡ **Performance Optimized** — Parallel asset loading, offscreen rendering pause, throttled raycasting
+- 🟢 **Scroll-Reactive Matrix Rain** — Canvas animation that progressively fills the screen as you scroll
+- 🧲 **Magnetic Hover Effect** — Section headings dynamically follow your cursor
+- 🃏 **Glassmorphism Cards** — Frosted-glass project and experience cards with hover interactions
+- 📜 **Horizontal Experience Carousel** — Scroll through experience cards with mouse-wheel and button support
+- 🔗 **Smooth Anchor Navigation** — Desktop pill nav & mobile hamburger menu with smooth scrolling
+- 📱 **Fully Responsive** — Optimized for desktop, tablet, and mobile viewports
+- ⚡ **Performance Optimized** — Matrix animation runs at a capped 15 FPS; renders only on scroll
+
+---
+
+## 📋 Sections
+
+| Section | Description |
+|---------|-------------|
+| **Home** | Hero with name and tagline |
+| **About** | Bio, background, and core competency skill badges |
+| **Projects** | 6 highlighted GitHub projects with links |
+| **Experience** | Horizontally scrollable cards — Deloitte, PES University, Fiverr, AIESEC |
+| **Leadership** | Campus club roles and team positions |
+| **Contact** | Email CTA and social links (GitHub + LinkedIn) |
+
+---
+
+## 💼 Projects Highlighted
+
+| Project | Description |
+|---------|-------------|
+| [Multi-Client Quiz Game](https://github.com/Sai-Varun-M/MultiServerQuizGameWithSSL) | Secure quiz system with SSL for 10+ concurrent users |
+| [Snake Game](https://github.com/Sai-Varun-M/SnakeGameUsingDataStructures) | Terminal-based snake game in C using dynamic memory |
+| [Pac-Man Clone](https://github.com/Sai-Varun-M/Python-Pac-Man) | Pygame Pac-Man clone with enemy AI and scoring |
+| [Dancing Lights](https://github.com/Sai-Varun-M/DancingLights) | LED pattern sequences on an embedded microcontroller |
+| [Mini E-Commerce App](https://github.com/Sai-Varun-M/MiniE-commerce) | Console-based e-commerce app with cart and auth |
+| [Exam Management System](https://github.com/MohammedAdnan1193/ExamManagementSystem) | Web portal for secure exam management workflows |
+
+---
+
+## 🧠 Core Competencies
+
+`Python` · `C/C++` · `SQL` · `Network Security` · `Cryptography` · `System Hardening` · `SSL Packet Inspection` · `Linux` · `Git` · `TCP/IP` · `Wireshark`
 
 ---
 
@@ -59,21 +92,15 @@ python3 -m http.server 8000
 open http://localhost:8000
 ```
 
+> No build step required — it's a pure HTML + JS single file.
+
 ---
 
 ## 📂 Project Structure
 
 ```
 SaiVarunMuthineni_Portfolio/
-├── index.html                  # Main page — all sections & inline scripts
-├── assets/
-│   ├── 3d-animation.js         # Three.js scene, character interactions, scroll animations
-│   ├── models/
-│   │   ├── character.enc       # AES-encrypted 3D character model (GLTF + Draco)
-│   │   └── char_enviorment.hdr # HDR environment map for realistic lighting
-│   └── draco/
-│       ├── draco_decoder.js    # Draco mesh decompression (JS fallback)
-│       └── draco_decoder.wasm  # Draco mesh decompression (WASM)
+├── index.html      # Entire portfolio — all sections, styles & scripts inline
 └── README.md
 ```
 
@@ -83,7 +110,9 @@ SaiVarunMuthineni_Portfolio/
 
 Have a project in mind or just want to say hi? Feel free to reach out!
 
-**📧** [saivarun.m2661@gmail.com](mailto:saivarun.m2661@gmail.com)
+**📧** [saivarun.m2661@gmail.com](mailto:saivarun.m2661@gmail.com)  
+**🔗** [linkedin.com/in/sai-varun-4a5983282](https://www.linkedin.com/in/sai-varun-4a5983282/)  
+**💻** [github.com/Sai-Varun-M](https://github.com/Sai-Varun-M)
 
 ---
 
