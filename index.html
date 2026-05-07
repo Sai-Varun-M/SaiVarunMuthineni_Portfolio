@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sai Varun Muthineni - Portfolio</title>
 
-    <!-- Removed 3D preloads -->
-
     <!-- Font: use <link> instead of @import to avoid render-blocking -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -262,6 +260,8 @@
                     <h3 class="text-2xl md:text-3xl font-bold mb-8">Core Competencies</h3>
                     <div class="flex flex-wrap justify-center gap-2 md:gap-4 max-w-4xl mx-auto">
                         <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Python</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Playwright</span>
+                        <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">pytest</span>
                         <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">C/C++</span>
                         <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">SQL</span>
                         <span class="skill-badge px-4 py-2 rounded-full text-sm md:text-base font-medium">Network
@@ -284,10 +284,42 @@
 
         <!-- Projects Section -->
         <section id="projects" class="section h-[300vh] justify-start pt-32">
-            <div class="section-content sticky top-1/2 -translate-y-1/2">
-                <h2 class="huge-text mb-12 force-hover cursor-pointer">Projects.</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <div class="glass-card p-6 text-center">
+            <div class="section-content sticky top-1/2 -translate-y-1/2 w-full max-w-[100vw]">
+                
+                <div class="flex flex-col items-center justify-center mb-8 px-4 md:px-12 max-w-7xl mx-auto text-center">
+                    <h2 class="huge-text mb-0 force-hover cursor-pointer">Projects.</h2>
+                    <button id="proj-scroll-btn"
+                        class="flex items-center justify-center text-green-400/80 animate-pulse hover:text-green-300 hover:scale-105 transition-all duration-300 mt-6 cursor-pointer focus:outline-none"
+                        aria-label="Toggle scroll projects">
+                        <span class="text-sm font-semibold tracking-widest uppercase">Scroll to end</span>
+                        <svg class="w-5 h-5 ml-2 transition-transform duration-300" id="proj-scroll-icon" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div id="projects-slider"
+                    class="flex overflow-x-auto gap-6 pb-8 px-4 md:px-12 snap-x snap-mandatory max-w-7xl mx-auto custom-scrollbar">
+                    
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-6 text-center hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-green-500">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Playwright Python Framework</h3>
+                        <p class="text-slate-400 mb-4">Production-grade E2E test automation framework with CI/CD & custom dashboard.</p>
+                        <a href="https://github.com/Sai-Varun-M/Playwright-Python" target="_blank"
+                            rel="noopener noreferrer"
+                            class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
+                            &rarr;</a>
+                    </div>
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-6 text-center hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-green-500">
+                        <h3 class="text-xl font-bold mb-2 text-green-400">Playwright Course Roadmap</h3>
+                        <p class="text-slate-400 mb-4">A comprehensive 35-day Python and Playwright learning journey.</p>
+                        <a href="https://github.com/Sai-Varun-M/Playwright_Course" target="_blank"
+                            rel="noopener noreferrer"
+                            class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
+                            &rarr;</a>
+                    </div>
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-6 text-center hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-green-500">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Multi-Client Quiz Game</h3>
                         <p class="text-slate-400 mb-4">Secure quiz system with SSL for 10+ concurrent users.</p>
                         <a href="https://github.com/Sai-Varun-M/MultiServerQuizGameWithSSL" target="_blank"
@@ -295,7 +327,7 @@
                             class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
-                    <div class="glass-card p-6 text-center">
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-6 text-center hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-green-500">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Snake Game</h3>
                         <p class="text-slate-400 mb-4">Terminal-based snake game in C using dynamic memory.</p>
                         <a href="https://github.com/Sai-Varun-M/SnakeGameUsingDataStructures" target="_blank"
@@ -303,7 +335,7 @@
                             class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
-                    <div class="glass-card p-6 text-center">
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-6 text-center hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-green-500">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Pac-Man Clone</h3>
                         <p class="text-slate-400 mb-4">Pygame Pac-Man clone with enemy AI and scoring.</p>
                         <a href="https://github.com/Sai-Varun-M/Python-Pac-Man" target="_blank"
@@ -311,14 +343,7 @@
                             class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
-                    <div class="glass-card p-6 text-center">
-                        <h3 class="text-xl font-bold mb-2 text-green-400">Dancing Lights</h3>
-                        <p class="text-slate-400 mb-4">LED pattern sequences on an embedded microcontroller.</p>
-                        <a href="https://github.com/Sai-Varun-M/DancingLights" target="_blank" rel="noopener noreferrer"
-                            class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
-                            &rarr;</a>
-                    </div>
-                    <div class="glass-card p-6 text-center">
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-6 text-center hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-green-500">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Mini E-Commerce App</h3>
                         <p class="text-slate-400 mb-4">Console-based e-commerce app with cart and auth.</p>
                         <a href="https://github.com/Sai-Varun-M/MiniE-commerce" target="_blank"
@@ -326,7 +351,7 @@
                             class="font-semibold text-green-500 hover:text-green-300 transition-colors">View on GitHub
                             &rarr;</a>
                     </div>
-                    <div class="glass-card p-6 text-center">
+                    <div class="flex-none w-[85vw] md:w-[450px] snap-center glass-card p-6 text-center hover:-translate-y-2 transition-transform duration-300 border-t-4 border-t-green-500">
                         <h3 class="text-xl font-bold mb-2 text-green-400">Exam Management System</h3>
                         <p class="text-slate-400 mb-4">Web portal for secure exam management workflows.</p>
                         <a href="https://github.com/MohammedAdnan1193/ExamManagementSystem" target="_blank"
@@ -617,6 +642,45 @@
         sections.forEach(section => {
             observer.observe(section);
         });
+
+        // --- Projects Carousel Toggle ---
+        const projSlider = document.getElementById('projects-slider');
+        const projScrollBtn = document.getElementById('proj-scroll-btn');
+        if (projSlider && projScrollBtn) {
+            const projBtnText = projScrollBtn.querySelector('span');
+            const projBtnIcon = document.getElementById('proj-scroll-icon');
+
+            projScrollBtn.addEventListener('click', () => {
+                const isAtEnd = projSlider.scrollLeft + projSlider.clientWidth >= projSlider.scrollWidth - 10;
+                if (isAtEnd) {
+                    projSlider.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    projSlider.scrollTo({ left: projSlider.scrollWidth, behavior: 'smooth' });
+                }
+            });
+
+            projSlider.addEventListener('scroll', () => {
+                const isAtEnd = projSlider.scrollLeft + projSlider.clientWidth >= projSlider.scrollWidth - 10;
+                if (isAtEnd) {
+                    projBtnText.innerText = "Scroll to start";
+                    projBtnIcon.style.transform = "rotate(180deg)";
+                } else {
+                    projBtnText.innerText = "Scroll to end";
+                    projBtnIcon.style.transform = "rotate(0deg)";
+                }
+            });
+
+            projSlider.addEventListener('wheel', (evt) => {
+                if (evt.deltaY !== 0) {
+                    const isAtStart = projSlider.scrollLeft === 0;
+                    const isAtEnd = projSlider.scrollLeft + projSlider.clientWidth >= projSlider.scrollWidth - 1;
+                    if ((evt.deltaY > 0 && !isAtEnd) || (evt.deltaY < 0 && !isAtStart)) {
+                        evt.preventDefault();
+                        projSlider.scrollLeft += evt.deltaY;
+                    }
+                }
+            }, { passive: false });
+        }
 
         // --- Experience Carousel Toggle ---
         const expSlider = document.getElementById('experience-slider');
